@@ -10,13 +10,18 @@ import Box from '@mui/material/Box'
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined'
 import Typography from '@mui/material/Typography'
 import Container from '@mui/material/Container'
+import Visibility from "@mui/icons-material/Visibility"
+import VisibilityOff from "@mui/icons-material/VisibilityOff"
+import InputAdornment from '@mui/material/InputAdornment'
+import { useState } from 'react'
+import IconButton from '@mui/material/IconButton'
 
 function Copyright(props) {
   return (
     <Typography variant="body2" color="text.secondary" align="center">
       {'Copyright © '}
       <Link color="inherit" href="https://mui.com/">
-        FarmFiesta
+        TaskHarbor
       </Link>{' '}
       {new Date().getFullYear()}
       {'.'}
@@ -68,6 +73,9 @@ export default function SignUp() {
     //   }
     // }
   };
+
+  const [showPassword, setShowPassword] = useState(false);
+  const handleClickShowPassword = () => setShowPassword(!showPassword);
 
   return (
     <Container component="main" maxWidth="xs" className="border-t">
@@ -121,12 +129,49 @@ export default function SignUp() {
             </Grid>
             <Grid item xs={12}>
               <TextField
+                className="remove-arrow"
+                required
+                fullWidth
+                name="phone"
+                label="Phone Number"
+                type="tel"
+                id="phone"
+                inputProps={{
+                    maxLength: 10,
+                }}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
                 required
                 fullWidth
                 name="password"
                 label="Password"
-                type="password"
+                type={showPassword ? "text" : "password"} 
                 id="password"
+                autoComplete="new-password"
+                InputProps={{ 
+                  endAdornment: (
+                    <InputAdornment position="end">
+                      <IconButton
+                        aria-label="toggle password visibility"
+                        onClick={handleClickShowPassword}
+                      >
+                        {showPassword ? <Visibility /> : <VisibilityOff />}
+                      </IconButton>
+                    </InputAdornment>
+                  )
+                }}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                required
+                fullWidth
+                name="confirm-password"
+                label="Confirm Password"
+                type="password"
+                id="confirm-password"
                 autoComplete="new-password"
               />
             </Grid>
