@@ -1,78 +1,57 @@
-"use client"
-import * as React from 'react'
-import Avatar from '@mui/material/Avatar'
-import Button from '@mui/material/Button'
-import CssBaseline from '@mui/material/CssBaseline'
-import TextField from '@mui/material/TextField'
-import Link from '@mui/material/Link'
-import Grid from '@mui/material/Grid'
-import Box from '@mui/material/Box'
-import LockOutlinedIcon from '@mui/icons-material/LockOutlined'
-import Typography from '@mui/material/Typography'
-import Container from '@mui/material/Container'
-import Visibility from "@mui/icons-material/Visibility"
-import VisibilityOff from "@mui/icons-material/VisibilityOff"
-import InputAdornment from '@mui/material/InputAdornment'
-import { useState } from 'react'
-import IconButton from '@mui/material/IconButton'
+"use client";
+import * as React from "react";
+import Avatar from "@mui/material/Avatar";
+import Button from "@mui/material/Button";
+import CssBaseline from "@mui/material/CssBaseline";
+import TextField from "@mui/material/TextField";
+import Link from "@mui/material/Link";
+import Grid from "@mui/material/Grid";
+import Box from "@mui/material/Box";
+import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
+import Typography from "@mui/material/Typography";
+import Container from "@mui/material/Container";
+import Visibility from "@mui/icons-material/Visibility";
+import VisibilityOff from "@mui/icons-material/VisibilityOff";
+import InputAdornment from "@mui/material/InputAdornment";
+import { useState } from "react";
+import IconButton from "@mui/material/IconButton";
+import { useRouter } from "next/navigation";
+import axios from "axios";
 
 function Copyright(props) {
   return (
     <Typography variant="body2" color="text.secondary" align="center">
-      {'Copyright © '}
+      {"Copyright © "}
       <Link color="inherit" href="https://mui.com/">
         TaskHarbor
-      </Link>{' '}
+      </Link>{" "}
       {new Date().getFullYear()}
-      {'.'}
+      {"."}
     </Typography>
   );
 }
 
 export default function SignUp() {
-
+  const [user, setUser] = React.useState({
+    firstName: "",
+    lastName: "",
+    phone: 0,
+    email: "",
+    password: "",
+    confirmPassword: "",
+  });
+  const router = useRouter();
   async function handleSubmit(event) {
-    // event.preventDefault();
-    // const userData = new FormData(event.currentTarget);
-
-    // toast.promise(new Promise(resolve => setTimeout(resolve, 2000)), {
-    //   pending: "Loading"
-    // });
-
-    // const { data, error } = await supabase.auth.signUp({
-    //   email: userData.get('email'),
-    //   password: userData.get('password'),
-    //   options: {
-    //     data: {
-    //       firstName: userData.get('firstName'),
-    //       lastName: userData.get('lastName')
-    //     },
-    //     emailRedirectTo: `${location.origin}/api/auth/callback`
-    //   }
-    // });
-
-    // console.log(error, data);
-
-    // toast.dismiss();
-
-    // if (error) {
-    //   toast.error("Server error: Try again after some time", {
-    //     autoClose: false
-    //   })
-    // }
-    // else {
-    //   if (!data.user) {
-    //     toast.error("User already exists", {
-    //       autoClose: false
-    //     });
-    //   }
-    //   else {
-    //     toast.info("Check your email", {
-    //       autoClose: false
-    //     });
-    //   }
-    // }
-  };
+    event.preventDefault();
+    try {
+      const resp = await axios.post("api/users/signup", user);
+      console.log(resp);
+      console.log("Signup Successful");
+      router.push("/login");
+    } catch (err) {
+      console.log("Signup Failed");
+    }
+  }
 
   const [showPassword, setShowPassword] = useState(false);
   const handleClickShowPassword = () => setShowPassword(!showPassword);
@@ -83,12 +62,12 @@ export default function SignUp() {
       <Box
         sx={{
           marginTop: 8,
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
         }}
       >
-        <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
+        <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
           <LockOutlinedIcon />
         </Avatar>
         <Typography component="h1" variant="h5">
@@ -105,6 +84,9 @@ export default function SignUp() {
                 id="firstName"
                 label="First Name"
                 autoFocus
+                onChange={(e) =>
+                  setUser({ ...user, firstName: e.target.value })
+                }
               />
             </Grid>
             <Grid item xs={12} sm={6}>
@@ -115,6 +97,7 @@ export default function SignUp() {
                 label="Last Name"
                 name="lastName"
                 autoComplete="family-name"
+                onChange={(e) => setUser({ ...user, lastName: e.target.value })}
               />
             </Grid>
             <Grid item xs={12}>
@@ -125,6 +108,7 @@ export default function SignUp() {
                 label="Email Address"
                 name="email"
                 autoComplete="email"
+                onChange={(e) => setUser({ ...user, email: e.target.value })}
               />
             </Grid>
             <Grid item xs={12}>
@@ -137,8 +121,9 @@ export default function SignUp() {
                 type="tel"
                 id="phone"
                 inputProps={{
-                    maxLength: 10,
+                  maxLength: 10,
                 }}
+                onChange={(e) => setUser({ ...user, phone: e.target.value })}
               />
             </Grid>
             <Grid item xs={12}>
@@ -147,10 +132,11 @@ export default function SignUp() {
                 fullWidth
                 name="password"
                 label="Password"
-                type={showPassword ? "text" : "password"} 
+                type={showPassword ? "text" : "password"}
                 id="password"
                 autoComplete="new-password"
-                InputProps={{ 
+                onChange={(e) => setUser({ ...user, password: e.target.value })}
+                InputProps={{
                   endAdornment: (
                     <InputAdornment position="end">
                       <IconButton
@@ -160,7 +146,7 @@ export default function SignUp() {
                         {showPassword ? <Visibility /> : <VisibilityOff />}
                       </IconButton>
                     </InputAdornment>
-                  )
+                  ),
                 }}
               />
             </Grid>
@@ -173,6 +159,9 @@ export default function SignUp() {
                 type="password"
                 id="confirm-password"
                 autoComplete="new-password"
+                onChange={(e) =>
+                  setUser({ ...user, confirmPassword: e.target.value })
+                }
               />
             </Grid>
           </Grid>
