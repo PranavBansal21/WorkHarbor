@@ -12,6 +12,8 @@ import Box from "@mui/material/Box";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
+import { useRouter } from "next/navigation";
+import axios from "axios";
 
 function Copyright(props) {
   return (
@@ -32,29 +34,20 @@ function Copyright(props) {
 }
 
 export default function Login() {
+  const router = useRouter();
+  const [user, setUser] = React.useState({
+    email: "",
+    password: "",
+  });
   async function handleSubmit(event) {
-    // event.preventDefault();
-    // const userData = new FormData(event.currentTarget);
-    // toast.promise(new Promise(resolve => setTimeout(resolve, 2000)), {
-    //   pending: "Loading"
-    // });
-    // const { data, error } = await supabase.auth.signInWithPassword({
-    //   email: userData.get('email'),
-    //   password: userData.get('password')
-    // });
-    // if (error) {
-    //   toast.dismiss();
-    //   toast.error(error.message, {
-    //     autoClose: false
-    //   });
-    // }
-    // else {
-    //   const role = data.user.role;
-    //   if (role === "vendor") {
-    //   }
-    //   else if (role === "customer") {
-    //   }
-    // }
+    event.preventDefault();
+    try {
+      const resp = await axios.post("/api/users/login", user);
+      console.log("Login Successful");
+      router.push("/");
+    } catch (error) {
+      console.log("Login Failed");
+    }
   }
 
   return (
@@ -84,6 +77,7 @@ export default function Login() {
             name="email"
             autoComplete="email"
             autoFocus
+            onChange={(e) => setUser({ ...user, email: e.target.value })}
           />
           <TextField
             margin="normal"
@@ -94,6 +88,7 @@ export default function Login() {
             type="password"
             id="password"
             autoComplete="current-password"
+            onChange={(e) => setUser({ ...user, password: e.target.value })}
           />
           <Button
             type="submit"
