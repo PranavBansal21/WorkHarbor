@@ -1,3 +1,11 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.inika {
+  font-family: var(--font-inika);
+}
+
+.irish_grover {
+  font-family: var(--font-irish_grover);
+}
