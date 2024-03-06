@@ -1,5 +1,13 @@
 import { Typography } from "@mui/material"
 
+const works = [
+    { id: 1, src: "/Images/back.jpg", kaam: "Store" },
+    { id: 2, src: "/Images/back.jpg", kaam: "Store" },
+    { id: 3, src: "/Images/back.jpg", kaam: "Store" },
+    { id: 4, src: "/Images/back.jpg", kaam: "Store" },
+    { id: 5, src: "/Images/back.jpg", kaam: "Store" },
+]
+
 export default function PreviousWork() {
     return (
         <div className="px-[80px]">
@@ -7,39 +15,17 @@ export default function PreviousWork() {
                 <Typography className="inika font-semibold text-2xl text-center">
                     Previous Works
                 </Typography>
-                <div>
-                    <div className="rounded-[40px] bg-gray-400 p-5 mt-2 flex">
-                        <div className="w-2/3">
-                            <img src="/Images/back.jpg" className="w-full rounded-[40px]" />
+                <div className="h-[550px] overflow-y-auto no-scrollbar"> 
+                    {works.map((work) => (
+                        <div key={work.id} className="rounded-[40px] bg-gray-400 p-5 mt-2 flex">
+                            <div className="w-2/3">
+                                <img src={work.src} className="w-full rounded-[40px]" />
+                            </div>
+                            <Typography className="inika text-white text-2xl text-center w-1/3">
+                                {work.kaam}
+                            </Typography>
                         </div>
-                        <Typography className="inika text-white text-2xl text-center w-1/3">
-                            Store
-                        </Typography>
-                    </div>
-                    <div className="rounded-[40px] bg-gray-400 p-5 mt-2 flex">
-                        <div className="w-2/3">
-                            <img src="/Images/back.jpg" className="w-full rounded-[40px]" />
-                        </div>
-                        <Typography className="inika text-white text-2xl text-center w-1/3">
-                            Store
-                        </Typography>
-                    </div>
-                    <div className="rounded-[40px] bg-gray-400 p-5 mt-2 flex">
-                        <div className="w-2/3">
-                            <img src="/Images/back.jpg" className="w-full rounded-[40px]" />
-                        </div>
-                        <Typography className="inika text-white text-2xl text-center w-1/3">
-                            Store
-                        </Typography>
-                    </div>
-                    <div className="rounded-[40px] bg-gray-400 p-5 mt-2 flex">
-                        <div className="w-2/3">
-                            <img src="/Images/back.jpg" className="w-full rounded-[40px]" />
-                        </div>
-                        <Typography className="inika text-white text-2xl text-center w-1/3">
-                            Store
-                        </Typography>
-                    </div>
+                    ))}
                 </div>
             </div>
         </div>
