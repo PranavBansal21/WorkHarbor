@@ -1,7 +1,10 @@
-import Login from "../components/Login/login"
+"use client";
+import Login from "../components/Login/login";
 
 export default function login() {
-    return (
-        <Login />
-    )
+  return (
+    <>
+      <Login />
+    </>
+  );
 }
