@@ -13,15 +13,15 @@ export const inika = Inika({
   variable: "--font-inika",
 })
 
-export const irish_grover = Irish_Grover({
+export const irishgrover = Irish_Grover({
   subsets: ["latin"],
   weight: "400",
-  variable: "--font-irish_grover",
+  variable: "--font-irishgrover",
 })
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en" className={`${inika.variable} ${irish_grover.variable}`} >
+    <html lang="en" className={`${inika.variable} ${irishgrover.variable}`} >
       <body>{children}</body>
     </html>
   );

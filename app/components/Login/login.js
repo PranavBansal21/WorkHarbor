@@ -4,8 +4,6 @@ import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
 import TextField from "@mui/material/TextField";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import Checkbox from "@mui/material/Checkbox";
 import Link from "@mui/material/Link";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
@@ -14,12 +12,13 @@ import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { useRouter } from "next/navigation";
 import axios from "axios";
+import Image from "next/image";
 
 function Copyright(props) {
   return (
     <Typography
       variant="body2"
-      color="text.secondary"
+      color="black"
       align="center"
       {...props}
     >
@@ -50,9 +49,28 @@ export default function Login() {
     }
   }
 
+  const black = {
+    backgroundColor: "#fff",
+    "& label": {
+      color: "#000",
+    },
+    "& fieldset": {
+      borderColor: "#000",
+    },
+  }
+
   return (
     <Container component="main" maxWidth="xs" className="border-t">
       <CssBaseline />
+      <Image
+        src="/Images/loginback.jpg"
+        fill={true}
+        quality={100}
+        style={{
+          opacity: 0.7,
+          zIndex: -1
+        }}
+      />
       <Box
         sx={{
           marginTop: 8,
@@ -78,6 +96,7 @@ export default function Login() {
             autoComplete="email"
             autoFocus
             onChange={(e) => setUser({ ...user, email: e.target.value })}
+            style={black}
           />
           <TextField
             margin="normal"
@@ -89,6 +108,7 @@ export default function Login() {
             id="password"
             autoComplete="current-password"
             onChange={(e) => setUser({ ...user, password: e.target.value })}
+            style={black}
           />
           <Button
             type="submit"

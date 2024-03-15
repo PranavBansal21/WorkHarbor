@@ -55,9 +55,6 @@ export default function Home() {
           src="/Images/background.jpg"
           fill={true}
           quality={100}
-          onScroll={{
-            opacity: 0.6
-          }}
           style={{
             opacity: 0.9
           }}

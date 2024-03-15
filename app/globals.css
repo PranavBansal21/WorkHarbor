@@ -6,8 +6,8 @@
   font-family: var(--font-inika);
 }
 
-.irish_grover {
-  font-family: var(--font-irish_grover);
+.irishgrover {
+  font-family: var(--font-irishgrover);
 }
 
 @layer utilities {

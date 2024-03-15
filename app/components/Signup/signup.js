@@ -17,10 +17,11 @@ import { useState } from "react";
 import IconButton from "@mui/material/IconButton";
 import { useRouter } from "next/navigation";
 import axios from "axios";
+import Image from "next/image";
 
 function Copyright(props) {
   return (
-    <Typography variant="body2" color="text.secondary" align="center">
+    <Typography variant="body2" color="black" align="center">
       {"Copyright © "}
       <Link color="inherit" href="https://mui.com/">
         TaskHarbor
@@ -56,9 +57,28 @@ export default function SignUp() {
   const [showPassword, setShowPassword] = useState(false);
   const handleClickShowPassword = () => setShowPassword(!showPassword);
 
+  const black = {
+    backgroundColor: "#fff",
+    "& label": {
+      color: "#000",
+    },
+    "& fieldset": {
+      borderColor: "#000",
+    },
+  }
+
   return (
     <Container component="main" maxWidth="xs" className="border-t">
       <CssBaseline />
+      <Image
+        src="/Images/loginback.jpg"
+        fill={true}
+        quality={100}
+        style={{
+          opacity: 0.7,
+          zIndex: -1
+        }}
+      />
       <Box
         sx={{
           marginTop: 8,
@@ -87,6 +107,7 @@ export default function SignUp() {
                 onChange={(e) =>
                   setUser({ ...user, firstName: e.target.value })
                 }
+                style={black}
               />
             </Grid>
             <Grid item xs={12} sm={6}>
@@ -98,6 +119,7 @@ export default function SignUp() {
                 name="lastName"
                 autoComplete="family-name"
                 onChange={(e) => setUser({ ...user, lastName: e.target.value })}
+                style={black}
               />
             </Grid>
             <Grid item xs={12}>
@@ -109,6 +131,7 @@ export default function SignUp() {
                 name="email"
                 autoComplete="email"
                 onChange={(e) => setUser({ ...user, email: e.target.value })}
+                style={black}
               />
             </Grid>
             <Grid item xs={12}>
@@ -121,9 +144,11 @@ export default function SignUp() {
                 type="tel"
                 id="phone"
                 inputProps={{
-                  maxLength: 10,
+                  minLength: 10,
+                  maxLength: 10
                 }}
                 onChange={(e) => setUser({ ...user, phone: e.target.value })}
+                style={black}
               />
             </Grid>
             <Grid item xs={12}>
@@ -148,6 +173,7 @@ export default function SignUp() {
                     </InputAdornment>
                   ),
                 }}
+                style={black}
               />
             </Grid>
             <Grid item xs={12}>
@@ -162,6 +188,7 @@ export default function SignUp() {
                 onChange={(e) =>
                   setUser({ ...user, confirmPassword: e.target.value })
                 }
+                style={black}
               />
             </Grid>
           </Grid>
@@ -176,7 +203,7 @@ export default function SignUp() {
           </Button>
           <Grid container justifyContent="flex-end">
             <Grid item>
-              <Link href="/login" variant="body2">
+              <Link href="/login" variant="body2" className="text-blue-800">
                 Already have an account? Login
               </Link>
             </Grid>
