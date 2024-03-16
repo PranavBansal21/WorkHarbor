@@ -17,11 +17,25 @@ import { styled, alpha } from '@mui/material/styles';
 import InputBase from '@mui/material/InputBase';
 import SearchIcon from '@mui/icons-material/Search';
 import { LocationOn } from '@mui/icons-material';
-
-const pages = ['Products', 'Pricing', 'Blog'];
-const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
+import { useRouter } from 'next/navigation';
+import { NextResponse } from 'next/server';
+import axios from 'axios';
+import { getCurrentLocation } from '@/utils/getCurrentLocation';
 
 export default function Navbar() {
+    const router = useRouter();
+    const logout = async () => {
+      try {
+        await axios.get("/api/users/logout");
+        router.push("/login");
+      } catch (error) {
+        return NextResponse.json({ error: error.message, status: 500 });
+      }
+    };
+
+    const settings = [
+        {name: 'Logout', execute: logout} ];
+
     const [anchorElNav, setAnchorElNav] = useState(null);
     const [anchorElUser, setAnchorElUser] = useState(null);
 
@@ -101,7 +115,7 @@ export default function Navbar() {
                         variant="h6"
                         noWrap
                         component="a"
-                        href="/home"
+                        // href="/home"
                         sx={{
                             mr: 2,
                             display: { xs: 'none', md: 'flex' },
@@ -110,6 +124,8 @@ export default function Navbar() {
                             textDecoration: 'none',
                         }}
                         className="inika"
+                        
+                        onClick={getCurrentLocation}
                     >
                         location
                     </Typography>
@@ -156,7 +172,7 @@ export default function Navbar() {
                         >
                             {settings.map((setting) => (
                                 <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                                    <Typography textAlign="center">{setting}</Typography>
+                                    <Typography textAlign="center" onClick={setting.execute}>{setting.name}</Typography>
                                 </MenuItem>
                             ))}
                         </Menu>
