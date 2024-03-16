@@ -89,7 +89,7 @@ export default function Navbar() {
                     <Typography
                         noWrap
                         component="a"
-                        href="/home"
+                        href="/"
                         className="irishgrover mr-2 text-3xl"
                     >
                         WorkHarbor
