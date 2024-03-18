@@ -32,6 +32,20 @@ const serviceSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: "User",
   },
+  city:{
+    type:String,
+    required:true,
+  },
+  state:{
+    type:String,
+    required:true,
+  },
+  reviews:[
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Review",
+    }
+  ]
 });
 
 const Service = mongoose.models.services || mongoose.model("services",serviceSchema);
