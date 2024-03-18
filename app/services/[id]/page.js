@@ -1,12 +1,25 @@
+"use client"
 import Grid from "@mui/material/Unstable_Grid2/Grid2";
 import Navbar from "@/app/components/Navbar/navbar";
 import AboutInfo from "@/app/components/Dashboard/aboutInfo";
 import BasicInfo from "@/app/components/Dashboard/basicInfo";
 import InfoImage from "@/app/components/Dashboard/infoImage";
-import { Box } from "@mui/material";
 import PreviousWork from "@/app/components/Dashboard/previousWork";
+import axios from "axios";
+import { useEffect, useState } from "react";
 
 export default function ServicePage({params}){
+  const [details,setDetails] = useState(null);
+  //details contain all the info of a service provider which is fetched from database
+  //now it is req to show in frontend
+  const findService = async()=>{
+  const userid = params.id;
+  const res = await axios.post("/api/services/findService",{userid});
+   setDetails(res.data);
+  }
+  useEffect(() => {
+    findService();
+  }, []);
     return (
         <>
           <Navbar />
