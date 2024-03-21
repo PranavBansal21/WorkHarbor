@@ -20,27 +20,29 @@ export default function ServicePage({params}){
   useEffect(() => {
     findService();
   }, []);
+  console.log(details);
     return (
-        <>
+        <div>
           <Navbar />
+          {details? (
           <div className="mt-10 px-10">
             <Grid container spacing={3}>
               <Grid xs={7}>
                 <Grid xs={12} marginBottom={4}>
-                  <InfoImage />
+                  <InfoImage props={[details.backImg, details.frontImg]} />
                 </Grid>
                 <Grid xs={12} marginBottom={4}>
-                  <BasicInfo />
+                  <BasicInfo props={[details.title,details.city,details.state,details.owner.phone,details.owner.email]}/>
                 </Grid>
                 <Grid xs={12}>
-                  <AboutInfo />
+                  <AboutInfo props={details.description} />
                 </Grid>
               </Grid>
               <Grid xs={5}>
-                <PreviousWork />
+                <PreviousWork props={details.previousWorks}/>
               </Grid>
             </Grid>
-          </div>
-        </>
+          </div>) : <h1>Loading</h1>}
+        </div>
       );
 }
