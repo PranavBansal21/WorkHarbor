@@ -63,8 +63,10 @@ export default function Home() {
         <div
           className="absolute w-full top-[45%] -translate-y-1/2 text-center"
         >
-          <h1 className="inika text-6xl text-white">
-            Connecting Service Providers <br /> with Seekers
+          <h1>
+            <span className="block inika text-6xl text-white bg-clip-text text-transparent">
+              Connecting Service Providers <br /> with Seekers
+            </span>
           </h1>
           <br />
           <h2 className="inika text-2xl text-white">
