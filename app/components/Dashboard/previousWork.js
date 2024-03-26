@@ -12,7 +12,7 @@ export default function PreviousWork({props}) {
                     {props.map((work) => (
                         <div key={work.id} className="rounded-[40px] bg-gray-400 p-5 mt-2 flex">
                             <div className="w-2/3">
-                                <img src={work.workImg} className="w-full rounded-[40px]" />
+                                <img src={work.workImg} className="w-full h-[150px] rounded-[40px]" />
                             </div>
                             <Typography className="inika text-white text-2xl text-center w-1/3">
                                 {work.workTitle}

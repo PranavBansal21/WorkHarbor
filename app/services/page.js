@@ -81,12 +81,12 @@ export default function Services() {
                     </Typography>
                   </div>
                   <Typography className="inika ml-1">
-                    {service.rating} Ratings
+                    {service.reviews.length} Ratings
                   </Typography>
                   <div className="flex gap-2 items-center">
                     <LocationOn />
                     <Typography className="inika">
-                      {service.location}
+                      {service.city},{service.state}
                     </Typography>
                   </div>
                 </CardContent>
