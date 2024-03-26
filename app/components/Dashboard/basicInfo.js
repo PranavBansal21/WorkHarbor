@@ -1,20 +1,20 @@
 import { Call, LocationOn, Mail } from "@mui/icons-material";
 import { Typography } from "@mui/material";
 
-export default function BasicInfo() {
+export default function BasicInfo({props}) {
     return (
         <div className="mt-16 flex flex-col gap-2">
             <Typography
                 className="inika text-2xl font-semibold"
             >
-                Harshad Slave Services
+                {props[0]}
             </Typography>
             <div className="flex">
                 <LocationOn />
                 <Typography
                     className="inika text-xl"
                 >
-                    Nagpur, Maharashtra
+                    {props[1]}, {props[2]}
                 </Typography>
             </div>
             <div className="flex gap-10">
@@ -23,7 +23,7 @@ export default function BasicInfo() {
                     <Typography
                         className="inika text-xl font-semibold"
                     >
-                        +91 8010271772
+                        +91 {props[3]}
                     </Typography>
                 </div>
                 <div className="flex gap-2 bg-gray-300 p-2 rounded-xl">
@@ -31,7 +31,7 @@ export default function BasicInfo() {
                     <Typography
                         className="inika text-xl"
                     >
-                        harshad.slave@gmail.com
+                        {props[4]}
                     </Typography>
                 </div>
             </div>
