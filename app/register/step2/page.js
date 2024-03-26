@@ -9,7 +9,7 @@ import LinearProgress from '@mui/material/LinearProgress'
 import Typography from '@mui/material/Typography'
 import Box from '@mui/material/Box'
 
-export default function Step1() {
+export default function Step2() {
     const router = useRouter();
     const [formData, setFormData] = useState({
         businessName: '',
