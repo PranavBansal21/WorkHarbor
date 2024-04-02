@@ -24,6 +24,7 @@ export async function POST(req) {
       lastName: user.lastName,
       email: user.email,
       phone: user.phone,
+      role:user.role,
     };
     const token = await jwt.sign(tokenData, process.env.NEXT_PUBLIC_TOKEN_SECRET, {
       expiresIn: "1d",

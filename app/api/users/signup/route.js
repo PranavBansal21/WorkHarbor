@@ -30,6 +30,7 @@ export async function POST(req) {
       email,
       phone,
       password: hashedPassword,
+      role:0,
     });
     const savedUser = await newUser.save();
     return NextResponse.json({

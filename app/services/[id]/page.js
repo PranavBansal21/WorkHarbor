@@ -20,7 +20,7 @@ export default function ServicePage({params}){
   useEffect(() => {
     findService();
   }, []);
-  console.log(details);
+  //console.log(details);
     return (
         <div>
           <Navbar />

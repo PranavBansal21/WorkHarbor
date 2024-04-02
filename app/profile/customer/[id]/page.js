@@ -1,7 +1,11 @@
+"use client"
 import { Grid, Typography } from "@mui/material"
-import Navbar from "../components/Navbar/navbar"
+import Navbar from "@/app/components/Navbar/navbar"
 import LocalPhoneIcon from '@mui/icons-material/LocalPhone'
 import MailIcon from '@mui/icons-material/Mail'
+import axios from "axios"
+import { getTokenData } from "@/utils/getTokenData"
+import { useEffect, useState } from "react"
 
 const postedServices = [
     { src: "/Images/background.jpg", title: "Furniture", tags: ["Carpenter", "Carpenter"], description: "The leg of the table has be broken and the furniture needs to be refurbished" },
@@ -11,11 +15,21 @@ const postedServices = [
     { src: "/Images/background.jpg", title: "Furniture", tags: ["Carpenter", "Carpenter"], description: "The leg of the table has be broken and the furniture needs to be refurbished" },
 ];
 
-export default function Profile() {
+export default function Profile({params}) {
+    const [pageUser,setPageUser] = useState(null);
+    const getUser = async()=>{
+        const res =await axios.post("/api/users/getTokenData");
+        setPageUser(res.data);
+    }
+    useEffect(() => {
+        getUser();
+    }, []);
     return (
         <>
             <Navbar />
+            {pageUser ?
             <>
+            
                 <div className="relative">
                     <img
                         className="w-screen h-64"
@@ -29,7 +43,7 @@ export default function Profile() {
                     </div>
                 </div>
                 <Typography className="inika text-2xl ml-64 mt-4 font-bold tracking-wide">
-                    Harshad Bangadkar
+                    {pageUser.firstName} {pageUser.lastName}
                 </Typography>
                 <Grid container className="mt-16">
                     <Grid xs={2.5} className="p-2">
@@ -41,13 +55,13 @@ export default function Profile() {
                                 <div className="flex gap-2">
                                     <LocalPhoneIcon />
                                     <Typography className="inika">
-                                        +91 8010271772
+                                        {pageUser.phone}
                                     </Typography>
                                 </div>
                                 <div className="flex gap-2">
                                     <MailIcon />
                                     <Typography className="inika">
-                                        iit2022149@iiita.ac.in
+                                        {pageUser.email}
                                     </Typography>
                                 </div>
                             </div>
@@ -80,7 +94,7 @@ export default function Profile() {
                         </div>
                     </Grid>
                 </Grid>
-            </>
+            </> : <div>Loading</div>}
         </>
     )
 }
