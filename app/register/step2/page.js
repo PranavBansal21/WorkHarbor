@@ -11,6 +11,7 @@ import Box from '@mui/material/Box'
 
 export default function Step2() {
     const router = useRouter();
+    
     const [formData, setFormData] = useState({
         businessName: '',
         pincode: null,
@@ -38,7 +39,7 @@ export default function Step2() {
         //Pranav yaha axios request daal 
 
         //Rerouting
-        router.push("/register/step2")
+        router.push("/register/step3")
     };
 
     function LinearProgressWithLabel(props) {
