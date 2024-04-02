@@ -2,25 +2,43 @@
 import React from 'react'
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
-import { Grid, Typography, Box, Button } from '@mui/material'
+import { Grid, Typography, Box, Button, TextField, IconButton } from '@mui/material'
 import Navbar from '@/app/components/Navbar/navbar'
 import PropTypes from 'prop-types'
-import LinearProgress from '@mui/material/LinearProgress'   
+import LinearProgress from '@mui/material/LinearProgress'
+import DeleteIcon from '@mui/icons-material/Delete';
 
 export default function Step3() {
     const router = useRouter();
 
-    const [image, setImage] = useState(null);
+    const [images, setImages] = useState([]);
 
-    const handleImageChange = (e) => {
-        const file = e.target.files[0];
-        if (file) {
-            const reader = new FileReader();
-            reader.onloadend = () => {
-                setImage(reader.result);
-            };
-            reader.readAsDataURL(file);
+    const handleImageChange = async (e) => {
+        if (images.length >= 5) {
+            alert("Maximum of 5 images can be uploaded.");
+            return;
         }
+
+        const files = Array.from(e.target.files).slice(0, 5 - images.length);
+        for (const file of files) {
+            const reader = new FileReader();
+            reader.readAsDataURL(file);
+            await new Promise((resolve) => {
+                reader.onloadend = () => {
+                    setImages(prevImages => [...prevImages, { url: reader.result, title: '', description: '' }]);
+                    resolve();
+                };
+            });
+        }
+    };
+
+    const handleInputChange = (index, field, value) => {
+        setImages(prev => prev.map((img, idx) => idx === index ? { ...img, [field]: value } : img));
+        console.log(images);
+    };
+
+    const handleRemoveImage = (index) => {
+        setImages(prevImages => prevImages.filter((_, idx) => idx !== index));
     };
 
     function LinearProgressWithLabel(props) {
@@ -39,10 +57,6 @@ export default function Step3() {
     }
 
     LinearProgressWithLabel.propTypes = {
-        /**
-         * The value of the progress indicator for the determinate and buffer variants.
-         * Value between 0 and 100.
-         */
         value: PropTypes.number.isRequired,
     };
     const [progress, setProgress] = React.useState(66);
@@ -74,15 +88,41 @@ export default function Step3() {
                             onChange={handleImageChange}
                             style={{ display: 'none' }}
                             id="image-upload"
+                            multiple
                         />
                         <label htmlFor="image-upload" className='w-full justify-center'>
-                            <img
-                                src={image || '/Images/drag.gif'}
-                                alt="Uploaded"
-                                className="object-cover p-2"
-                                style={{ cursor: 'pointer', width: '600px', maxHeight: '400px' }}
-                            />
+                            <Button variant="contained" component="span">
+                                Upload Image
+                            </Button>
                         </label>
+                        {images.map((image, index) => (
+                            <Box key={index} className="p-2 gap-2 flex flex-col mb-4">
+                                <img
+                                    src={image.url}
+                                    alt="Uploaded"
+                                    style={{ width: '100%', height: '200px', objectFit: 'cover' }}
+                                />
+                                <TextField
+                                    name="title"
+                                    label="Title"
+                                    required
+                                    fullWidth
+                                    value={image.title}
+                                    onChange={(e) => handleInputChange(index, 'title', e.target.value)}
+                                />
+                                <TextField
+                                    name="description"
+                                    label="Description"
+                                    required
+                                    fullWidth
+                                    value={image.description}
+                                    onChange={(e) => handleInputChange(index, 'description', e.target.value)}
+                                />
+                                <IconButton onClick={() => handleRemoveImage(index)}>
+                                    <DeleteIcon />
+                                </IconButton>
+                            </Box>
+                        ))}
                         <Button type="submit" variant="contained" className="bg-blue-500 hover:bg-blue-800 justify-center w-full mt-2">
                             Save and Submit
                         </Button>
