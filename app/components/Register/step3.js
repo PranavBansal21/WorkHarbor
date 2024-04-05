@@ -1,19 +1,16 @@
 "use client"
 import React from 'react'
 import { useState } from 'react'
-import { useRouter } from 'next/navigation'
 import { Grid, Typography, Box, Button, TextField, IconButton } from '@mui/material'
 import Navbar from '@/app/components/Navbar/navbar'
 import PropTypes from 'prop-types'
 import LinearProgress from '@mui/material/LinearProgress'
 import DeleteIcon from '@mui/icons-material/Delete';
 
-export default function Step3() {
-    const router = useRouter();
+export default function Step3({ formData, updateFormData, onSubmit }) {
+    const [images, setImages] = useState(formData);
 
-    const [images, setImages] = useState([]);
-
-    const handleImageChange = async (e) => {
+    async function handleImageChange (e) {
         if (images.length >= 5) {
             alert("Maximum of 5 images can be uploaded.");
             return;
@@ -32,14 +29,19 @@ export default function Step3() {
         }
     };
 
-    const handleInputChange = (index, field, value) => {
+    function handleInputChange (index, field, value) {
         setImages(prev => prev.map((img, idx) => idx === index ? { ...img, [field]: value } : img));
-        console.log(images);
     };
 
-    const handleRemoveImage = (index) => {
+    function handleRemoveImage (index) {
         setImages(prevImages => prevImages.filter((_, idx) => idx !== index));
     };
+
+    function handleSubmit (e) {
+        e.preventDefault();
+        updateFormData(images);
+        onSubmit();
+    }
 
     function LinearProgressWithLabel(props) {
         return (
@@ -95,7 +97,7 @@ export default function Step3() {
                                 Upload Image
                             </Button>
                         </label>
-                        {images.map((image, index) => (
+                        {images.length > 0 && images.map((image, index) => (
                             <Box key={index} className="p-2 gap-2 flex flex-col mb-4">
                                 <img
                                     src={image.url}
@@ -123,7 +125,7 @@ export default function Step3() {
                                 </IconButton>
                             </Box>
                         ))}
-                        <Button type="submit" variant="contained" className="bg-blue-500 hover:bg-blue-800 justify-center w-full mt-2">
+                        <Button type="submit" variant="contained" className="bg-blue-500 hover:bg-blue-800 justify-center w-full mt-2" onClick={handleSubmit}>
                             Save and Submit
                         </Button>
                     </Grid>

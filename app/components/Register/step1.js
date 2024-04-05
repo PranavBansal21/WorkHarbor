@@ -1,7 +1,6 @@
 "use client"
 import React from 'react'
 import { useState } from 'react'
-import { useRouter } from 'next/navigation'
 import { Button, Grid, TextField } from '@mui/material'
 import Navbar from '@/app/components/Navbar/navbar'
 import PropTypes from 'prop-types'
@@ -9,37 +8,25 @@ import LinearProgress from '@mui/material/LinearProgress'
 import Typography from '@mui/material/Typography'
 import Box from '@mui/material/Box'
 
-export default function Step2() {
-    const router = useRouter();
+export default function Step1({ formData, updateFormData, onSubmit }) {
     
-    const [formData, setFormData] = useState({
-        businessName: '',
-        pincode: null,
-        buildingName: '',
-        streetName: '',
-        area: '',
-        landMark: '',
-        city: '',
-        state: ''
-    });
+    const [currFormData, setCurrFormData] = useState(formData);
 
-    const handleChange = (e) => {
+    function handleChange (e) {
         const { name, value } = e.target;
         if (name === 'pincode' && value.length > 6) {
             return;
         }
-        setFormData((prevData) => ({
+        setCurrFormData((prevData) => ({
             ...prevData,
             [name]: value,
         }));
     };
 
-    const handleSubmit = (e) => {
+    function handleSubmit (e) {
         e.preventDefault();
-        //Pranav yaha axios request daal 
-
-        //Rerouting
-        router.push("/register/step3")
+        updateFormData(currFormData);
+        onSubmit();
     };
 
     function LinearProgressWithLabel(props) {
@@ -64,7 +51,7 @@ export default function Step2() {
          */
         value: PropTypes.number.isRequired,
     };
-    const [progress, setProgress] = React.useState(33);
+    const [progress, setProgress] = React.useState(0);
 
     return (
         <>
@@ -89,7 +76,7 @@ export default function Step2() {
                                 <TextField
                                     name="businessName"
                                     label="Business Name"
-                                    value={formData.businessName}
+                                    value={currFormData.businessName}
                                     onChange={handleChange}
                                     required
                                     fullWidth
@@ -97,7 +84,7 @@ export default function Step2() {
                                 <TextField
                                     name="pincode"
                                     label="Pincode"
-                                    value={formData.pincode}
+                                    value={currFormData.pincode}
                                     onChange={handleChange}
                                     type='number'
                                     required
@@ -106,7 +93,7 @@ export default function Step2() {
                                 <TextField
                                     name="buildingName"
                                     label="Building Name"
-                                    value={formData.buildingName}
+                                    value={currFormData.buildingName}
                                     onChange={handleChange}
                                     required
                                     fullWidth
@@ -114,7 +101,7 @@ export default function Step2() {
                                 <TextField
                                     name="streetName"
                                     label="Street Name"
-                                    value={formData.streetName}
+                                    value={currFormData.streetName}
                                     onChange={handleChange}
                                     required
                                     fullWidth
@@ -122,7 +109,7 @@ export default function Step2() {
                                 <TextField
                                     name="area"
                                     label="Area"
-                                    value={formData.area}
+                                    value={currFormData.area}
                                     onChange={handleChange}
                                     required
                                     fullWidth
@@ -130,7 +117,7 @@ export default function Step2() {
                                 <TextField
                                     name="landMark"
                                     label="Land Mark"
-                                    value={formData.landMark}
+                                    value={currFormData.landMark}
                                     onChange={handleChange}
                                     required
                                     fullWidth
@@ -139,7 +126,7 @@ export default function Step2() {
                                     <TextField
                                         name="city"
                                         label="City"
-                                        value={formData.city}
+                                        value={currFormData.city}
                                         onChange={handleChange}
                                         required
                                         fullWidth
@@ -147,7 +134,7 @@ export default function Step2() {
                                     <TextField
                                         name="state"
                                         label="State"
-                                        value={formData.state}
+                                        value={currFormData.state}
                                         onChange={handleChange}
                                         required
                                         fullWidth

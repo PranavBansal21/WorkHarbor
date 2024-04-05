@@ -1,19 +1,15 @@
 "use client"
 import React from 'react'
 import { useState } from 'react'
-import { useRouter } from 'next/navigation'
 import { Button, Grid, TextField } from '@mui/material'
+import PropTypes from 'prop-types'
+import LinearProgress from '@mui/material/LinearProgress'
 import Navbar from '@/app/components/Navbar/navbar'
 import Typography from '@mui/material/Typography'
+import Box from '@mui/material/Box'
 
-export default function Step1() {
-    const router = useRouter();
-    const [formData, setFormData] = useState({
-        name: '',
-        phone: null,
-        optionalPhone: null,
-        email: ''
-    });
+export default function Step2({ formData, updateFormData, onSubmit }) {
+    const [currFormData, setCurrFormData] = useState(formData);
 
     const [dropDown, setDropDown] = useState(false);
     const [selectedCategories, setSelectedCategories] = useState([]);
@@ -24,31 +20,55 @@ export default function Step1() {
         { id: 3, name: "Electrician" }
     ];
 
-    const handleChange = (e) => {
+    function handleChange (e) {
         const { name, value } = e.target;
-        setFormData((prevData) => ({
+        setCurrFormData((prevData) => ({
             ...prevData,
             [name]: value,
         }));
     };
 
-    const handleSubmit = (e) => {
+    function handleSubmit (e) {
         e.preventDefault();
-        console.log(formData);
+        updateFormData(currFormData);
+        onSubmit();
     };
 
     function handleDropDown () {
         setDropDown(!dropDown);
     };
 
-    const handleCategoryClick = (categoryId) => {
+    function handleCategoryClick (categoryId) {
         if (selectedCategories.includes(categoryId)) {
             setSelectedCategories(selectedCategories.filter(id => id !== categoryId));
         } else {
             setSelectedCategories([...selectedCategories, categoryId]);
         }
-        console.log(selectedCategories);
     };
+
+    function LinearProgressWithLabel(props) {
+        return (
+            <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                <Box sx={{ width: '100%', mr: 1 }}>
+                    <LinearProgress variant="determinate" {...props} />
+                </Box>
+                <Box sx={{ minWidth: 35 }}>
+                    <Typography variant="body2" color="text.secondary">{`${Math.round(
+                        props.value,
+                    )}%`}</Typography>
+                </Box>
+            </Box>
+        );
+    }
+
+    LinearProgressWithLabel.propTypes = {
+        /**
+         * The value of the progress indicator for the determinate and buffer variants.
+         * Value between 0 and 100.
+         */
+        value: PropTypes.number.isRequired,
+    };
+    const [progress, setProgress] = React.useState(33);
 
     return (
         <>
@@ -62,6 +82,9 @@ export default function Step1() {
                         />
                     </Grid>
                     <Grid xs={6} className="p-2">
+                        <Box sx={{ width: '100%' }}>
+                            <LinearProgressWithLabel value={progress} />
+                        </Box>
                         <Typography className="inika text-xl mb-2 font-bold">
                             Enter your Details
                         </Typography>
@@ -70,7 +93,7 @@ export default function Step1() {
                                 <TextField
                                     name="name"
                                     label="Name"
-                                    value={formData.name}
+                                    value={currFormData.name}
                                     onChange={handleChange}
                                     required
                                     fullWidth
@@ -79,7 +102,7 @@ export default function Step1() {
                                 <TextField
                                     name="phone"
                                     label="Phone Number"
-                                    value={formData.phone}
+                                    value={currFormData.phone}
                                     onChange={handleChange}
                                     type='number'
                                     required
@@ -88,7 +111,7 @@ export default function Step1() {
                                 <TextField
                                     name="optionalPhone"
                                     label="Phone Number"
-                                    value={formData.optionalPhone}
+                                    value={currFormData.optionalPhone}
                                     onChange={handleChange}
                                     type='number'
                                     fullWidth
@@ -97,7 +120,7 @@ export default function Step1() {
                                 <TextField
                                     name="email"
                                     label="Email"
-                                    value={formData.email}
+                                    value={currFormData.email}
                                     onChange={handleChange}
                                     required
                                     fullWidth
