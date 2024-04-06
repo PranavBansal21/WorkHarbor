@@ -25,26 +25,26 @@ import { getCurrentLocation } from '@/utils/getCurrentLocation';
 export default function Navbar() {
     const router = useRouter();
     const logout = async () => {
-      try {
-        await axios.get("/api/users/logout");
-        router.push("/login");
-      } catch (error) {
-        return NextResponse.json({ error: error.message, status: 500 });
-      }
-    };
-    const goToProfile =async()=>{
         try {
-            const tokenData =await axios.post("/api/users/getTokenData");
-            if(tokenData.data.role==0) router.push(`/profile/customer/${tokenData.data.id}`);
-            return NextResponse.json({message:"dfj"});
+            await axios.get("/api/users/logout");
+            router.push("/login");
+        } catch (error) {
+            return NextResponse.json({ error: error.message, status: 500 });
+        }
+    };
+    const goToProfile = async () => {
+        try {
+            const tokenData = await axios.post("/api/users/getTokenData");
+            if (tokenData.data.role == 0) router.push(`/profile/customer/${tokenData.data.id}`);
+            return NextResponse.json({ message: "dfj" });
         } catch (err) {
             return NextResponse.json({ error: error.message, status: 500 });
         }
     }
 
     const settings = [
-        {name: 'Logout', execute: logout},
-        {name: 'Profile',execute: goToProfile} ];
+        { name: 'Logout', execute: logout },
+        { name: 'Profile', execute: goToProfile }];
 
     const [anchorElNav, setAnchorElNav] = useState(null);
     const [anchorElUser, setAnchorElUser] = useState(null);
@@ -134,7 +134,7 @@ export default function Navbar() {
                             textDecoration: 'none',
                         }}
                         className="inika"
-                        
+
                         onClick={getCurrentLocation}
                     >
                         location
@@ -155,14 +155,14 @@ export default function Navbar() {
 
                     <Box sx={{ flexGrow: 0 }}>
                         <div className="flex gap-3 items-center">
-                            <Typography className="inika text-xl">
-                                Harshad
-                            </Typography>
                             <Tooltip title="Open settings">
                                 <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
                                     <Avatar alt="Remy Sharp" src='/Images/profilePic.jpg' />
                                 </IconButton>
                             </Tooltip>
+                            <Typography className="inika text-xl">
+                                Harshad
+                            </Typography>
                         </div>
                         <Menu
                             sx={{ mt: '45px' }}

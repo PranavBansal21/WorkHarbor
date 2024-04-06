@@ -29,12 +29,12 @@ export default function Step2({ formData, updateFormData, onSubmit }) {
 
     function handleSubmit(e) {
         e.preventDefault();
+        setCurrFormData((prevData) => ({
+            ...prevData,
+            [tags]: selectedTags,
+        }));
         updateFormData(currFormData);
         onSubmit();
-    };
-
-    function handleTagSelection (selectedTags) {
-        console.log('Selected Tags:', selectedTags);
     };
 
     function addTag (tag) { 
@@ -120,7 +120,7 @@ export default function Step2({ formData, updateFormData, onSubmit }) {
                             </div>
                             <TagSelector tags={selectedTags} removeTag={data => removeTag(data)} />
                         </div>
-                        <Button type="submit" variant="contained" className="bg-blue-500 hover:bg-blue-800">
+                        <Button variant="contained" className="bg-blue-500 hover:bg-blue-800" onClick={handleSubmit}>
                             Save and Continue
                         </Button>
                     </Grid>
