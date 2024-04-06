@@ -8,11 +8,11 @@ export default function Register() {
     const [formData, setFormData] = useState({
         // Initialize form data for all steps here
         step1: { businessName: '', pincode: null, buildingName: '', streetName: '', area: '', landMark: '', city: '', state: ''},
-        step2: { name: '', phone: null, optionalPhone: null, email: '' },
+        step2: { phone: null, email: '', tags: [] },
         step3: []
     });
 
-    const [step, setStep] = useState(1);
+    const [step, setStep] = useState(2);
 
     function updateFormData (step, newData) {
         setFormData(prevFormData => ({
