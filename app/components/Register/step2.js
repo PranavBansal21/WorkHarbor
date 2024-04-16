@@ -7,20 +7,19 @@ import LinearProgress from '@mui/material/LinearProgress'
 import Navbar from '@/app/components/Navbar/navbar'
 import Typography from '@mui/material/Typography'
 import Box from '@mui/material/Box'
+import TagSelector from './tagSelector'
+import Chip from '@mui/material/Chip'
+
+const tags = [
+    "Plumber", "Carpenter", "Electrician"
+];
 
 export default function Step2({ formData, updateFormData, onSubmit }) {
     const [currFormData, setCurrFormData] = useState(formData);
 
-    const [dropDown, setDropDown] = useState(false);
-    const [selectedCategories, setSelectedCategories] = useState([]);
+    const [selectedTags, setSelectedTags] = useState([]);
 
-    const categories = [
-        { id: 1, name: "Plumber" },
-        { id: 2, name: "Carpenter" },
-        { id: 3, name: "Electrician" }
-    ];
-
-    function handleChange (e) {
+    function handleChange(e) {
         const { name, value } = e.target;
         setCurrFormData((prevData) => ({
             ...prevData,
@@ -28,22 +27,25 @@ export default function Step2({ formData, updateFormData, onSubmit }) {
         }));
     };
 
-    function handleSubmit (e) {
+    function handleSubmit(e) {
         e.preventDefault();
+        setCurrFormData((prevData) => ({
+            ...prevData,
+            [tags]: selectedTags,
+        }));
         updateFormData(currFormData);
         onSubmit();
     };
 
-    function handleDropDown () {
-        setDropDown(!dropDown);
-    };
-
-    function handleCategoryClick (categoryId) {
-        if (selectedCategories.includes(categoryId)) {
-            setSelectedCategories(selectedCategories.filter(id => id !== categoryId));
-        } else {
-            setSelectedCategories([...selectedCategories, categoryId]);
+    function addTag (tag) { 
+        if (!selectedTags.includes(tag)) {
+            setSelectedTags(prevTags => [...prevTags, tag]);
         }
+    }
+
+    function removeTag (tag) {
+        const updatedTags = selectedTags.filter((t) => t !== tag);
+        setSelectedTags(updatedTags);
     };
 
     function LinearProgressWithLabel(props) {
@@ -86,74 +88,41 @@ export default function Step2({ formData, updateFormData, onSubmit }) {
                             <LinearProgressWithLabel value={progress} />
                         </Box>
                         <Typography className="inika text-xl mb-2 font-bold">
-                            Enter your Details
+                            Enter other Business Related Details
                         </Typography>
-                        <form onSubmit={handleSubmit}>
-                            <div className="flex flex-col gap-2">
-                                <TextField
-                                    name="name"
-                                    label="Name"
-                                    value={currFormData.name}
-                                    onChange={handleChange}
-                                    required
-                                    fullWidth
-                                />
-                                <hr />
-                                <TextField
-                                    name="phone"
-                                    label="Phone Number"
-                                    value={currFormData.phone}
-                                    onChange={handleChange}
-                                    type='number'
-                                    required
-                                    fullWidth
-                                />
-                                <TextField
-                                    name="optionalPhone"
-                                    label="Phone Number"
-                                    value={currFormData.optionalPhone}
-                                    onChange={handleChange}
-                                    type='number'
-                                    fullWidth
-                                />
-                                <hr />
-                                <TextField
-                                    name="email"
-                                    label="Email"
-                                    value={currFormData.email}
-                                    onChange={handleChange}
-                                    required
-                                    fullWidth
-                                />
-
-                                <Button onClick={handleDropDown} className="inika hover:bg-gray-300 text-black text-left">
-                                    Select tags
-                                </Button>
-                                {dropDown && (
-                                    <div>
-                                        <ul>
-                                            {categories.map((cat) => (
-                                                <li key={cat.id} onClick={() => handleCategoryClick(cat.id)}>
-                                                    {cat.name}
-                                                </li>
-                                            ))}
-                                        </ul>
-                                    </div>
-                                )}
-                                {selectedCategories.length > 0 && (
-                                    <div>
-                                        {selectedCategories.map((categoryId) => (
-                                            <Typography key={categoryId}>
-                                                {categories.find((category) => category.id === categoryId).name}
-                                            </Typography>
-                                        ))}
-                                    </div>
-                                )}
-                                <Button type="submit" variant="contained" className="bg-blue-500 hover:bg-blue-800">
-                                    Save and Continue
-                                </Button>
+                        <div className='flex flex-col gap-2'>
+                            <TextField
+                                name="phone"
+                                label="Phone Number"
+                                value={formData.phone}
+                                onChange={handleChange}
+                                type='number'
+                                required
+                                fullWidth
+                            />
+                            <TextField
+                                name="email"
+                                label="Email"
+                                value={formData.email}
+                                onChange={handleChange}
+                                required
+                                fullWidth
+                            />
+                        </div>
+                        <div className="container my-4">
+                            <Typography className="inika text-xl font-bold">
+                                Select Tags
+                            </Typography>
+                            <div className="my-2 flex flex-wrap gap-2">
+                                {tags.map((tag, index) => (
+                                    <Chip label={tag} variant="outlined" onClick={() => addTag(tag)} />
+                                ))}
                             </div>
-                        </form>
+                            <TagSelector tags={selectedTags} removeTag={data => removeTag(data)} />
+                        </div>
+                        <Button variant="contained" className="bg-blue-500 hover:bg-blue-800" onClick={handleSubmit}>
+                            Save and Continue
+                        </Button>
                     </Grid>
                 </Grid>
             </div>
