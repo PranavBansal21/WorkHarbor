@@ -40,6 +40,22 @@ const serviceSchema = new mongoose.Schema({
     type:String,
     required:true,
   },
+  pincode:{
+    type:Number,
+    required:true,
+  },
+  buildingName:{
+    type:String,
+  },
+  streetName:{
+    type:String,
+  },
+  area:{
+    type:String,
+  },
+  landmark:{
+    type:String,
+  },
   reviews:[
     {
       type: mongoose.Schema.Types.ObjectId,

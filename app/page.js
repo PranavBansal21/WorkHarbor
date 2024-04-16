@@ -90,7 +90,7 @@ export default function Home() {
       >
         {/* <button onClick={logout}>LOGOUT</button> */}/
         <Image
-          src="/Images/background2.jpg"
+          src="/Images/service.jpg"
           fill={true}
           quality={100}
           onScroll={{
@@ -109,7 +109,7 @@ export default function Home() {
       >
         {/* <button onClick={logout}>LOGOUT</button> */}/
         <Image
-          src="/Images/background3.jpg"
+          src="/Images/service.jpg"
           fill={true}
           quality={100}
           onScroll={{
