@@ -180,8 +180,8 @@ export default function Navbar() {
                             open={Boolean(anchorElUser)}
                             onClose={handleCloseUserMenu}
                         >
-                            {settings.map((setting) => (
-                                <MenuItem key={setting} onClick={handleCloseUserMenu}>
+                            {settings.map((setting, index) => (
+                                <MenuItem key={index} onClick={handleCloseUserMenu}>
                                     <Typography textAlign="center" onClick={setting.execute}>{setting.name}</Typography>
                                 </MenuItem>
                             ))}

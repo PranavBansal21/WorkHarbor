@@ -42,9 +42,9 @@ export default function Services() {
       </Typography>
       {services ? (
         <Grid container spacing={2}>
-          {services.map((service) => (
+          {services.map((service, index) => (
             <Grid
-              key={service._id}
+              key={index}
               item
               xs={12}
               sm={6}
@@ -54,7 +54,7 @@ export default function Services() {
               justifyContent="center"
               alignItems="center"
             >
-              <Card key={service._id} sx={{ maxWidth: 345 }}>
+              <Card sx={{ maxWidth: 345 }}>
                 <CardActionArea>
                   <CardMedia
                     component="img"

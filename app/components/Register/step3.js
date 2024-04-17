@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Grid,
   Typography,
@@ -51,9 +51,10 @@ export default function Step3({ formData, updateFormData, onSubmit }) {
 
         if (response.ok && data.secure_url) {
           const newImage = {
-            url: data.secure_url,
-            title: "",
-            description: "",
+            workImg: data.secure_url,
+            workTitle: "",
+            workDesc: "",
+            public_id: data.public_id,
           };
 
           // Add uploaded image to the state
@@ -84,6 +85,10 @@ export default function Step3({ formData, updateFormData, onSubmit }) {
     setUploadedImages(updatedImages);
   };
 
+  useEffect(() => {
+    updateFormData(uploadedImages);
+  }, uploadedImages);
+
   const handleSubmit = (e) => {
     e.preventDefault();
     updateFormData(uploadedImages);
@@ -95,14 +100,14 @@ export default function Step3({ formData, updateFormData, onSubmit }) {
       <Navbar />
       <div className="m-16">
         <Grid container className="flex">
-          <Grid xs={6}>
+          <Grid item xs={6}>
             <img
               src="/Images/back.jpg"
               className="object-cover p-2"
               alt="Background"
             />
           </Grid>
-          <Grid xs={6} className="p-2">
+          <Grid item xs={6} className="p-2">
             <Box sx={{ width: "100%" }}>
               <LinearProgress variant="determinate" value={progress} />
             </Box>
@@ -135,7 +140,7 @@ export default function Step3({ formData, updateFormData, onSubmit }) {
               uploadedImages.map((image, index) => (
                 <Box key={index} className="p-2 gap-2 flex flex-col mb-4">
                   <img
-                    src={image.url}
+                    src={image.workImg}
                     alt={`Uploaded ${index}`}
                     style={{
                       width: "100%",
@@ -144,23 +149,23 @@ export default function Step3({ formData, updateFormData, onSubmit }) {
                     }}
                   />
                   <TextField
-                    name="title"
+                    name="workTitle"
                     label="Title"
                     required
                     fullWidth
-                    value={image.title}
+                    value={image.workTitle}
                     onChange={(e) =>
-                      handleInputChange(index, "title", e.target.value)
+                      handleInputChange(index, "workTitle", e.target.value)
                     }
                   />
                   <TextField
-                    name="description"
+                    name="workDesc"
                     label="Description"
                     required
                     fullWidth
-                    value={image.description}
+                    value={image.workDesc}
                     onChange={(e) =>
-                      handleInputChange(index, "description", e.target.value)
+                      handleInputChange(index, "workDesc", e.target.value)
                     }
                   />
                   <IconButton onClick={() => handleRemoveImage(index)}>
@@ -169,7 +174,6 @@ export default function Step3({ formData, updateFormData, onSubmit }) {
                 </Box>
               ))}
             <Button
-              type="submit"
               variant="contained"
               className="bg-blue-500 hover:bg-blue-800 justify-center w-full mt-2"
               onClick={handleSubmit}
