@@ -15,25 +15,30 @@ export async function POST(req) {
       token.value,
       process.env.NEXT_PUBLIC_TOKEN_SECRET
     );
-    //console.log(decodedToken);
+
     const user = await User.findOne({ _id: decodedToken.id });
     console.log(x.formData);
     user.role = 1;
+    user.phone = step2.phone;
+    user.email = step2.email;
+
+    const serv = new Service({
+      title: step1.businessName,
+      description: "djbcj",
+      owner: user,
+      city: step1.city,
+      state: step1.state,
+      pincode: step1.pincode,
+      buildingName: step1.buildingName,
+      streetName: step1.streetName,
+      area: step1.area,
+      landMark: step1.landMark,
+      previousWorks: [...step3],
+    });
+
+    await serv.save();
     await user.save();
-    // const serv = new Service({
-    //   title: step1.businessName,
-    //   owner: user,
-    //   city: step1.city,
-    //   state: step1.state,
-    //   pincode: step1.pincode,
-    //   buildingName: step1.buildingName,
-    //   streetName: step1.streetName,
-    //   area: step1.area,
-    //   landMark: step1.landMark,
-
-    // });
-
-    return NextResponse.json({ message: "sdjnjd" });
+    return NextResponse.json(serv);
   } catch (err) {
     return NextResponse.json({ error: err.message });
   }

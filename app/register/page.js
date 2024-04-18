@@ -9,10 +9,9 @@ import axios from "axios";
 export default function Register() {
   const router = useRouter();
   const [formData, setFormData] = useState({
-    // Initialize form data for all steps here
     step1: {
       businessName: "",
-      pincode: null,
+      pincode: undefined,
       buildingName: "",
       streetName: "",
       area: "",
@@ -20,7 +19,7 @@ export default function Register() {
       city: "",
       state: "",
     },
-    step2: { name: "", phone: null, optionalPhone: null, email: "" },
+    step2: { phone: undefined, email: "" },
     step3: [],
   });
 
@@ -37,11 +36,11 @@ export default function Register() {
     setStep(step + 1);
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     console.log(formData);
-    //const x = formData.json();
-    //console.log(x);
-    const res = axios.post("/api/register", { formData });
+    const res = await axios.post("/api/register", { formData });
+    console.log(res.data);
+    router.push("/services");
   };
   //console.log(formData)
   return (
