@@ -1,7 +1,4 @@
 "use client";
-// import axios from "axios";
-// import { useRouter } from "next/navigation";
-// import { NextResponse } from "next/server";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -13,15 +10,6 @@ const links = [
 ]
 
 export default function Home() {
-  // const router = useRouter();
-  // const logout = async () => {
-  //   try {
-  //     await axios.get("/api/users/logout");
-  //     router.push("/login");
-  //   } catch (error) {
-  //     return NextResponse.json({ error: error.message, status: 500 });
-  //   }
-  // };
   return (
     <div>
       <div className="fixed z-10 flex gap-5 ml-10 mt-5">
@@ -56,7 +44,7 @@ export default function Home() {
           fill={true}
           quality={100}
           style={{
-            opacity: 0.9
+            opacity: 1
           }}
           priority
         />
