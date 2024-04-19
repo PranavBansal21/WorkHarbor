@@ -7,9 +7,10 @@ import Review from "@/models/reviewModel";
 connect();
 
 export async function POST(req) {
-  const {userid} = await req.json()
-  const user = await Service.findById(userid).populate("owner").populate("reviews");
-  console.log(user);
+  const { userid } = await req.json();
+  const user = await Service.findById(userid)
+    .populate("owner")
+    .populate("reviews");
   const res = NextResponse.json(user);
   return res;
 }

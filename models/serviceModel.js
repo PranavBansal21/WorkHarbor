@@ -15,6 +15,14 @@ const serviceSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  businessEmail: {
+    type: String,
+    required: true,
+  },
+  businessPhone: {
+    type: Number,
+    required: true,
+  },
   description: {
     type: String,
     required: true,
