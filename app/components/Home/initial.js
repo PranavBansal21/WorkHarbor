@@ -16,12 +16,12 @@ export default function Initial() {
       />
       <div className="absolute w-full top-[45%] -translate-y-1/2 text-center">
         <h1>
-          <span className="block inika text-6xl text-white bg-clip-text text-transparent">
+          <span className="inika text-6xl text-black">
             Connecting Service Providers <br /> with Seekers
           </span>
         </h1>
         <br />
-        <h2 className="inika text-2xl text-white">
+        <h2 className="inika text-2xl text-black">
           Find the Right person for the Right work at the Right place
         </h2>
       </div>
