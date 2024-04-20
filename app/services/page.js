@@ -35,7 +35,7 @@ export default function Services() {
 
   return (
     <div>
-      
+
       <Navbar />
       <Typography className="inika text-xl my-2 ml-5">
         Top Service Providers in Mumbai
@@ -86,7 +86,7 @@ export default function Services() {
                   <div className="flex gap-2 items-center">
                     <LocationOn />
                     <Typography className="inika">
-                      {service.city},{service.state}
+                      {service.city}, {service.state}
                     </Typography>
                   </div>
                 </CardContent>

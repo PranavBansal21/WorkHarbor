@@ -1,7 +1,7 @@
 import { Typography } from "@mui/material";
 
 export default function PreviousWork({ props }) {
-  console.log(props);
+  // console.log(props);
   return (
     <div className="px-[80px]">
       <div className="bg-gray-300 p-4 rounded-3xl">

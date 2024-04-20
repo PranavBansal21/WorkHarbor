@@ -1,0 +1,92 @@
+"use client"
+import Rating from "@mui/material/Rating";
+import { Button, Divider, TextField, Typography } from "@mui/material";
+
+export default function Reviews({ props }) {
+
+    const handleSubmit = (event) => {
+        event.preventDefault();
+
+        const formData = new FormData(event.target);
+        const rating = formData.get('half-rating');
+        const comment = formData.get('comment');
+
+        console.log("Rating:", rating);
+        console.log("Comment:", comment);
+
+    };
+
+    return (
+        <div className="mt-4 flex flex-col gap-5">
+            <Typography className="inika font-semibold text-2xl">
+                Reviews and Ratings:-
+            </Typography>
+            <div className="flex gap-5">
+                <div className="flex gap-3">
+                    <Typography className="inika bg-green-600 p-1 px-3 rounded-md">
+                        {props[0]}
+                    </Typography>
+                    <Rating
+                        name="half-rating-read"
+                        value={props[0]}
+                        precision={0.5}
+                        readOnly
+                        size="large"
+                    />
+                </div>
+                <Typography className="inika text-2xl font-bold tracking-wide">
+                    {props[1].length} Reviews
+                </Typography>
+            </div>
+            <div>
+                <form onSubmit={handleSubmit}>
+                    <div className="flex gap-4 mb-3">
+                        <Typography className="inika">
+                            Add a review
+                        </Typography>
+                        <Rating name="half-rating" defaultValue={2.5} precision={0.5} required />
+                    </div>
+                    <TextField
+                        id="comment"
+                        label="Comment"
+                        name="comment"
+                        multiline
+                        rows={4}
+                        variant="outlined"
+                        fullWidth
+                        required
+                        className="mb-3"
+                    />
+                    <Button type="submit" variant="contained" className="bg-blue-500 hover:bg-blue-800">
+                        Submit Review
+                    </Button>
+                </form>
+                <Divider className="bg-black mt-2"/>
+            </div>
+            <div>
+                {props[1].map((review, index) => (
+                    <div key={index}>
+                        <div className="flex gap-2">
+                            <Typography>
+                                {review.owner}
+                            </Typography>
+                            <Rating
+                                name="half-rating-read"
+                                value={review.stars}
+                                precision={0.5}
+                                readOnly
+                                size="large"
+                            />
+                        </div>
+                        <div>
+                            <Typography>
+                                {review.comment}
+                            </Typography>
+                        </div>
+                        <Divider className="bg-black mt-2"/>
+                    </div>
+                ))}
+            </div>
+        </div>
+    )
+}
