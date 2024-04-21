@@ -82,9 +82,7 @@ const serviceSchema = new mongoose.Schema({
     default: 0,
   },
   tags: [
-    {
-      type: String,
-    },
+   String,
   ],
 });
 
