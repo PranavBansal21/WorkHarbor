@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import Grid from "@mui/material/Unstable_Grid2/Grid2";
 import Navbar from "@/app/components/Navbar/navbar";
 import AboutInfo from "@/app/components/Dashboard/aboutInfo";
@@ -17,11 +17,12 @@ export default function ServicePage({ params }) {
     const userid = params.id;
     const res = await axios.post("/api/services/findService", { userid });
     setDetails(res.data);
-  }
+  };
   useEffect(() => {
     findService();
   }, []);
   // console.log(details);
+  
   return (
     <div>
       <Navbar />
@@ -33,20 +34,40 @@ export default function ServicePage({ params }) {
                 <InfoImage props={[details.backImg, details.frontImg]} />
               </Grid>
               <Grid xs={12} marginBottom={4}>
-                <BasicInfo props={[details.title, details.city, details.state, details.owner.phone, details.owner.email]} />
+                <BasicInfo
+                  props={[
+                    details.title,
+                    details.city,
+                    details.state,
+                    details.owner.phone,
+                    details.owner.email,
+                  ]}
+                />
               </Grid>
               <Grid xs={12}>
-                <AboutInfo props={[details.description, details.buildingName, details.streetName, details.area, details.city, details.state]} />
+                <AboutInfo
+                  props={[
+                    details.description,
+                    details.buildingName,
+                    details.streetName,
+                    details.area,
+                    details.city,
+                    details.state,
+                  ]}
+                />
               </Grid>
               <Grid xs={12}>
-                <Reviews props={[details.stars, details.reviews]} />
+                <Reviews props={[details.stars, details.reviews,params]} />
               </Grid>
             </Grid>
             <Grid xs={5}>
               <PreviousWork props={details.previousWorks} />
             </Grid>
           </Grid>
-        </div>) : <h1>Loading</h1>}
+        </div>
+      ) : (
+        <h1>Loading</h1>
+      )}
     </div>
   );
 }
