@@ -6,17 +6,11 @@ import Toolbar from "@mui/material/Toolbar";
 import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
 import Menu from "@mui/material/Menu";
-import MenuIcon from "@mui/icons-material/Menu";
 import Container from "@mui/material/Container";
 import Avatar from "@mui/material/Avatar";
 import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
-import AdbIcon from "@mui/icons-material/Adb";
 import { useState } from "react";
-import { styled, alpha } from "@mui/material/styles";
-import InputBase from "@mui/material/InputBase";
-import SearchIcon from "@mui/icons-material/Search";
-import { LocationOn } from "@mui/icons-material";
 import { useRouter } from "next/navigation";
 import { NextResponse } from "next/server";
 import axios from "axios";
@@ -48,9 +42,20 @@ export default function Navbar() {
     }
   };
 
+  const register = async () => {
+    try {
+
+      router.push(`/register`)
+
+    } catch (err) {
+      console.log("error routing to the register page");
+    }
+  }
+
   const settings = [
     { name: "Logout", execute: logout },
     { name: "Profile", execute: goToProfile },
+    { name: "Register", execute: register },
   ];
 
   const [anchorElNav, setAnchorElNav] = useState(null);
