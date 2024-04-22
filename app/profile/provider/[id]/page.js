@@ -40,6 +40,7 @@ export default function Profile({ params }) {
   useEffect(() => {
     getUser();
   }, []);
+  console.log(user);
   return (
     <>
       <Navbar />

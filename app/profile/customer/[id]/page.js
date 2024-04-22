@@ -10,44 +10,6 @@ import InfoImage from "@/app/components/Dashboard/infoImage";
 import PostedServices from "@/app/components/Profile/postedServices";
 import PostedPosts from "@/app/components/Profile/postedPosts";
 
-const postedServices = [
-  {
-    workImg: "/Images/background.jpg",
-    workTitle: "Furniture",
-    tags: ["Carpenter", "Carpenter"],
-    workDesc:
-      "The leg of the table has be broken and the furniture needs to be refurbished",
-  },
-  {
-    workImg: "/Images/background.jpg",
-    workTitle: "Furniture",
-    tags: ["Carpenter", "Carpenter"],
-    workDesc:
-      "The leg of the table has be broken and the furniture needs to be refurbished",
-  },
-  {
-    workImg: "/Images/background.jpg",
-    workTitle: "Furniture",
-    tags: ["Carpenter", "Carpenter"],
-    workDesc:
-      "The leg of the table has be broken and the furniture needs to be refurbished",
-  },
-  {
-    workImg: "/Images/background.jpg",
-    workTitle: "Furniture",
-    tags: ["Carpenter", "Carpenter"],
-    workDesc:
-      "The leg of the table has be broken and the furniture needs to be refurbished",
-  },
-  {
-    workImg: "/Images/background.jpg",
-    workTitle: "Furniture",
-    tags: ["Carpenter", "Carpenter"],
-    workDesc:
-      "The leg of the table has be broken and the furniture needs to be refurbished",
-  },
-];
-
 export default function Profile({ params }) {
   const [pageUser, setPageUser] = useState(null);
   const [user, setUser] = useState(null);
@@ -64,7 +26,7 @@ export default function Profile({ params }) {
   return (
     <>
       <Navbar />
-      {pageUser && user ? (
+      {pageUser && user && user.posts.length > 0 ? (
         <div className="px-10">
           <Grid container>
             <Grid item xs={8} className="ml-2 mt-5">

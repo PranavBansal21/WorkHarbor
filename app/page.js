@@ -6,7 +6,15 @@ import Services from "./components/Home/services";
 import Contact from "./components/Home/contact";
 import { useEffect, useState } from "react";
 import axios from "axios";
-import { Avatar, Box, IconButton, Menu, MenuItem, Tooltip, Typography } from "@mui/material";
+import {
+  Avatar,
+  Box,
+  IconButton,
+  Menu,
+  MenuItem,
+  Tooltip,
+  Typography,
+} from "@mui/material";
 import { useRouter } from "next/navigation";
 
 const links = [
@@ -20,36 +28,25 @@ export default function Home() {
   const [scrolled, setScrolled] = useState(false);
   const router = useRouter();
   const logout = async () => {
-    try {
-      await axios.get("/api/users/logout");
-      router.push("/login");
-    } catch (error) {
-      return NextResponse.json({ error: error.message, status: 500 });
-    }
+    await axios.get("/api/users/logout");
+    router.push("/login");
   };
   const goToProfile = async () => {
-    try {
-      const tokenData = await axios.post("/api/users/getTokenData");
-      if (tokenData.data.role == 0)
-        router.push(`/profile/customer/${tokenData.data.id}`);
-      else if (tokenData.data.role == 1) {
-        router.push(`/profile/provider/${tokenData.data.id}`);
-      }
-      return NextResponse.json({ message: "dfj" });
-    } catch (err) {
-      return NextResponse.json({ error: error.message, status: 500 });
+    const tokenData = await axios.post("/api/users/getTokenData");
+    if (tokenData.data.role == 0)
+      router.push(`/profile/customer/${tokenData.data.id}`);
+    else if (tokenData.data.role == 1) {
+      router.push(`/profile/provider/${tokenData.data.id}`);
     }
   };
 
   const register = async () => {
     try {
-
-      router.push(`/register`)
-
+      router.push(`/register`);
     } catch (err) {
       console.log("error routing to the register page");
     }
-  }
+  };
 
   const settings = [
     { name: "Logout", execute: logout },
@@ -78,7 +75,6 @@ export default function Home() {
   // Effect to add/remove scroll event listener
   useEffect(() => {
     const handleScroll = () => {
-     
       const isScrolled = window.scrollY > 20;
       if (isScrolled !== scrolled) {
         setScrolled(isScrolled);
@@ -86,15 +82,14 @@ export default function Home() {
     };
 
     // Add event listener
-    window.addEventListener('scroll', handleScroll);
+    window.addEventListener("scroll", handleScroll);
 
     // Remove event listener on cleanup
-    return () => window.removeEventListener('scroll', handleScroll);
-    
+    return () => window.removeEventListener("scroll", handleScroll);
   }, [scrolled]);
-  useEffect(()=>{
+  useEffect(() => {
     tokenData();
-  },[])
+  }, []);
   const [token, setToken] = useState(null);
   const tokenData = async () => {
     const res = await axios.post("/api/users/getTokenData");
@@ -107,7 +102,13 @@ export default function Home() {
   };
   return (
     <div>
-      <div className={`z-10 fixed w-screen flex justify-between py-5 px-10 ${scrolled ? 'bg-white opacity-80 border border-b-gray-600 text-blue-950 decoration-black' : 'text-white decoration-white'}`}> 
+      <div
+        className={`z-10 fixed w-screen flex justify-between py-5 px-10 ${
+          scrolled
+            ? "bg-white opacity-80 border border-b-gray-600 text-blue-950 decoration-black"
+            : "text-white decoration-white"
+        }`}
+      >
         <div className="z-10 flex gap-5">
           {links.map((link, index) => (
             <Link key={index} href={link.href}>
@@ -117,62 +118,64 @@ export default function Home() {
             </Link>
           ))}
         </div>
-          {console.log(token)}
-          {token==null?
-        <div className="z-10 flex gap-5 text-2xl">
-          <div>
-            <Link
-              href="/login"
-              className="hover:underline decoration-4 underline-offset-8"
-            >
-              Login
-            </Link>
+        {console.log(token)}
+        {token == null ? (
+          <div className="z-10 flex gap-5 text-2xl">
+            <div>
+              <Link
+                href="/login"
+                className="hover:underline decoration-4 underline-offset-8"
+              >
+                Login
+              </Link>
+            </div>
+            <div>
+              <Link
+                href="/signup"
+                className="hover:underline decoration-4 underline-offset-8"
+              >
+                Signup
+              </Link>
+            </div>
           </div>
-          <div>
-            <Link
-              href="/signup"
-              className="hover:underline decoration-4 underline-offset-8"
+        ) : (
+          <Box sx={{ flexGrow: 0 }}>
+            <div className="flex gap-3 items-center">
+              <Tooltip title="Open settings">
+                <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+                  <Avatar alt="Remy Sharp" src="/Images/profilePic.jpg" />
+                </IconButton>
+              </Tooltip>
+              <Typography className="inika text-xl">
+                {token.firstName}
+              </Typography>
+            </div>
+            <Menu
+              sx={{ mt: "45px" }}
+              id="menu-appbar"
+              anchorEl={anchorElUser}
+              anchorOrigin={{
+                vertical: "top",
+                horizontal: "right",
+              }}
+              keepMounted
+              transformOrigin={{
+                vertical: "top",
+                horizontal: "right",
+              }}
+              open={Boolean(anchorElUser)}
+              onClose={handleCloseUserMenu}
             >
-              Signup
-            </Link>
-          </div>
-        </div>
-  :<Box sx={{ flexGrow: 0 }}>
-  <div className="flex gap-3 items-center">
-    <Tooltip title="Open settings">
-      <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-        <Avatar alt="Remy Sharp" src="/Images/profilePic.jpg" />
-      </IconButton>
-    </Tooltip>
-    <Typography className="inika text-xl">
-      {token.firstName}
-    </Typography>
-  </div>
-  <Menu
-    sx={{ mt: "45px" }}
-    id="menu-appbar"
-    anchorEl={anchorElUser}
-    anchorOrigin={{
-      vertical: "top",
-      horizontal: "right",
-    }}
-    keepMounted
-    transformOrigin={{
-      vertical: "top",
-      horizontal: "right",
-    }}
-    open={Boolean(anchorElUser)}
-    onClose={handleCloseUserMenu}
-  >
-    {settings.map((setting, index) => (
-      <MenuItem key={index} onClick={handleCloseUserMenu}>
-        <Typography textAlign="center" onClick={setting.execute}>
-          {setting.name}
-        </Typography>
-      </MenuItem>
-    ))}
-  </Menu>
-</Box>}
+              {settings.map((setting, index) => (
+                <MenuItem key={index} onClick={handleCloseUserMenu}>
+                  <Typography textAlign="center" onClick={setting.execute}>
+                    {setting.name}
+                  </Typography>
+                </MenuItem>
+              ))}
+            </Menu>
+          </Box>
+        )}
       </div>
 
       <Initial />
