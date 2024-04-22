@@ -8,11 +8,10 @@ import PreviousWork from "@/app/components/Dashboard/previousWork";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import Reviews from "@/app/components/Dashboard/rewiews";
+import CircularProgress from "@mui/material/CircularProgress";
 
 export default function ServicePage({ params }) {
   const [details, setDetails] = useState(null);
-  //details contain all the info of a service provider which is fetched from database
-  //now it is req to show in frontend
   const findService = async () => {
     const userid = params.id;
     const res = await axios.post("/api/services/findService", { userid });
@@ -21,8 +20,7 @@ export default function ServicePage({ params }) {
   useEffect(() => {
     findService();
   }, []);
-  // console.log(details);
-  
+
   return (
     <div>
       <Navbar />
@@ -57,7 +55,7 @@ export default function ServicePage({ params }) {
                 />
               </Grid>
               <Grid xs={12}>
-                <Reviews props={[details.stars, details.reviews,params]} />
+                <Reviews props={[details.stars, details.reviews, params]} />
               </Grid>
             </Grid>
             <Grid xs={5}>
@@ -66,7 +64,9 @@ export default function ServicePage({ params }) {
           </Grid>
         </div>
       ) : (
-        <h1>Loading</h1>
+        <div className="flex justify-center items-center mt-10">
+          <CircularProgress />
+        </div>
       )}
     </div>
   );
