@@ -72,10 +72,17 @@ export default function Services() {
   };
 
   const truncateText = (text) => {
-    if (text.length <= 70) {
+    if (text.length <= 60) {
       return text;
     }
-    return text.substr(0, 70) + "...";
+    return text.substr(0, 60) + "...";
+  };
+
+  const truncateText2 = (text) => {
+    if (text.length <= 25) {
+      return text;
+    }
+    return text.substr(0, 25) + "...";
   };
 
   return (
@@ -137,18 +144,18 @@ export default function Services() {
                 >
                   <CardContent>
                     <Typography className="inika text-xl">
-                      {service.title}
+                      {truncateText2(service.title)}
                     </Typography>
                     <div className="flex gap-2 items-center">
                       <Typography className="inika text-gray-400">
-                        {service.location}
+                        {service.city},{service.state}
                       </Typography>
                     </div>
                   </CardContent>
                   <CardActionArea>
                     <CardMedia
                       component="img"
-                      image={service.frontImg}
+                      image={service.image}
                       style={{
                         minHeight: "250px",
                         maxHeight: "250px",
