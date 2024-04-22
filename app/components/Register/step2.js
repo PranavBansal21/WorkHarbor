@@ -9,8 +9,7 @@ import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import TagSelector from "./tagSelector";
 import Chip from "@mui/material/Chip";
-
-const tags = ["Plumber", "Carpenter", "Electrician"];
+import { Tags } from "@/utils/tags";
 
 export default function Step2({ formData, updateFormData, onSubmit }) {
   const [currFormData, setCurrFormData] = useState(formData);
@@ -62,10 +61,6 @@ export default function Step2({ formData, updateFormData, onSubmit }) {
   }
 
   LinearProgressWithLabel.propTypes = {
-    /**
-     * The value of the progress indicator for the determinate and buffer variants.
-     * Value between 0 and 100.
-     */
     value: PropTypes.number.isRequired,
   };
   const [progress, setProgress] = React.useState(33);
@@ -109,7 +104,7 @@ export default function Step2({ formData, updateFormData, onSubmit }) {
                 Select Tags
               </Typography>
               <div className="my-2 flex flex-wrap gap-2">
-                {tags.map((tag, index) => (
+                {Tags.map((tag, index) => (
                   <Chip
                     key={index}
                     label={tag}
