@@ -1,6 +1,6 @@
 "use client";
 import Rating from "@mui/material/Rating";
-import { Button, Divider, TextField, Typography } from "@mui/material";
+import { Avatar, Button, Divider, TextField, Typography } from "@mui/material";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
@@ -19,6 +19,7 @@ export default function Reviews({ props }) {
 
   useEffect(() => {
     tokenData();
+    getUser();
   }, []);
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -39,7 +40,17 @@ export default function Reviews({ props }) {
       serviceProvider,
     });
   };
-
+  const [user, setUser] = useState([]);
+  const getUser = async () => {
+    for (let x of props[1]) {
+      const userId = x.owner;
+      const resp = await axios.post("/api/users/getUser", { userId });
+      setUser((prevUser) => ({
+        ...prevUser,
+        [userId]: resp.data.firstName, // Assuming resp.data.name contains the user's name
+      }));
+    }
+  };
   return (
     <div className="mt-4 flex flex-col gap-5">
       <Typography className="inika font-semibold text-2xl">
@@ -104,7 +115,8 @@ export default function Reviews({ props }) {
         {props[1].map((review, index) => (
           <div key={index}>
             <div className="flex gap-2">
-              <Typography>{review.owner}</Typography>
+              <Avatar alt="Remy Sharp" src="/Images/profilePic.jpg" />
+              <Typography>{user[review.owner]}</Typography>
               <Rating
                 name="half-rating-read"
                 value={review.stars}

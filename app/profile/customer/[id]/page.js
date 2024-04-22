@@ -55,9 +55,7 @@ export default function Profile({ params }) {
     const res = await axios.post("/api/users/getTokenData");
     setPageUser(res.data);
     const userId = res.data.id;
-    console.log(userId);
     const resp = await axios.post("/api/users/getUser", { userId });
-    console.log(resp.data);
     setUser(resp.data);
   };
   useEffect(() => {
