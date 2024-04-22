@@ -1,5 +1,13 @@
 "use client";
-import { Card, CardActionArea, CardContent, CardMedia, CircularProgress, Grid, Typography } from "@mui/material";
+import {
+  Card,
+  CardActionArea,
+  CardContent,
+  CardMedia,
+  CircularProgress,
+  Grid,
+  Typography,
+} from "@mui/material";
 import Navbar from "@/app/components/Navbar/navbar";
 import LocalPhoneIcon from "@mui/icons-material/LocalPhone";
 import MailIcon from "@mui/icons-material/Mail";
@@ -12,16 +20,20 @@ import { useEffect, useState } from "react";
 import InfoImage from "@/app/components/Dashboard/infoImage";
 import PostedServices from "@/app/components/Profile/postedServices";
 import PreviousWork from "@/app/components/Dashboard/previousWork";
+import PostedPosts from "@/app/components/Profile/postedPosts";
 
 export default function Profile({ params }) {
   const [pageUser, setPageUser] = useState(null);
-
+  const [user, setUser] = useState(null);
   const getUser = async () => {
     const userid = params.id;
     const resp = await axios.post("/api/services/allServices");
     for (let serv of resp.data) {
       if (serv.owner == userid) {
         setPageUser(serv);
+        const userId = serv.owner;
+        const resp = await axios.post("/api/users/getUser", { userId });
+        setUser(resp.data);
       }
     }
   };
@@ -31,9 +43,9 @@ export default function Profile({ params }) {
   return (
     <>
       <Navbar />
-      {pageUser ? (
+      {pageUser && user ? (
         <div className="px-10">
-          <Grid container >
+          <Grid container>
             <Grid item xs={8} className="ml-2 mt-5">
               <InfoImage props={[pageUser.backImg, pageUser.frontImg]} />
               <div className="ml-64 mt-4 flex gap-10">
@@ -58,11 +70,15 @@ export default function Profile({ params }) {
                 <div className="mt-2 flex flex-col gap-2">
                   <div className="flex gap-2">
                     <LocalPhoneIcon />
-                    <Typography className="inika">{pageUser.businessPhone}</Typography>
+                    <Typography className="inika">
+                      {pageUser.businessPhone}
+                    </Typography>
                   </div>
                   <div className="flex gap-2">
                     <MailIcon />
-                    <Typography className="inika">{pageUser.businessEmail}</Typography>
+                    <Typography className="inika">
+                      {pageUser.businessEmail}
+                    </Typography>
                   </div>
                   <hr />
                   <div className="flex gap-2">
@@ -84,9 +100,7 @@ export default function Profile({ params }) {
                   </div>
                   <hr />
                   <div className="flex gap-3 items-center">
-                    <Typography className="inika">
-                      {pageUser.stars}
-                    </Typography>
+                    <Typography className="inika">{pageUser.stars}</Typography>
                     <Rating
                       name="half-rating-read"
                       value={pageUser.stars}
@@ -104,8 +118,8 @@ export default function Profile({ params }) {
                     Posted Works
                   </Typography>
                   <Grid container>
-                    {pageUser.previousWorks.map((service, index) => (
-                      <PostedServices key={index} props={service} />
+                    {user.posts.map((service, index) => (
+                      <PostedPosts key={index} props={service} />
                     ))}
                   </Grid>
                 </div>

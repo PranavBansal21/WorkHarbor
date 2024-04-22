@@ -1,4 +1,4 @@
-import mongoose from "mongoose";
+const mongoose = require("mongoose");
 
 const postSchema = new mongoose.Schema({
   title: {
@@ -9,7 +9,11 @@ const postSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  location: {
+  city: {
+    type: String,
+    required: true,
+  },
+  state: {
     type: String,
     required: true,
   },
@@ -28,4 +32,4 @@ const postSchema = new mongoose.Schema({
 });
 
 const Post = mongoose.models.Post || mongoose.model("Post", postSchema);
-export default Post;
+module.exports = Post;

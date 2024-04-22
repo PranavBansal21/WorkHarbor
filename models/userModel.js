@@ -23,15 +23,21 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  role:{
-    type:Number,
-    default:0,
-    required:true,
+  role: {
+    type: Number,
+    default: 0,
+    required: true,
   },
   isVerified: {
     type: Boolean,
     default: false,
   },
+  posts: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Post",
+    },
+  ],
   forgotPasswordToken: String,
   forgotPasswordTokenExpiry: Date,
   verifyToken: String,
