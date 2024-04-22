@@ -50,7 +50,7 @@ export default function Profile({ params }) {
 
           <Grid container className="mt-4">
             <Grid xs={2.5} className="p-2">
-              <div className="border border-black rounded-xl h-80 p-4">
+              <div className="border border-black rounded-xl h-min p-4">
                 <Typography className="inika text-xl text-center font-bold">
                   Contact Information
                 </Typography>
