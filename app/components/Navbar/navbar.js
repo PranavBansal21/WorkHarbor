@@ -91,7 +91,7 @@ export default function Navbar() {
   }, []);
 
   return (
-    <AppBar position="static">
+    <AppBar position="static" className="bg-customHome z-100">
       <Container maxWidth="xl">
         <Toolbar disableGutters className="p-2 justify-between">
           <Typography
@@ -111,7 +111,7 @@ export default function Navbar() {
                     <Avatar alt="Remy Sharp" src="/Images/profilePic.jpg" />
                   </IconButton>
                 </Tooltip>
-                <Typography className="inika text-xl">
+                <Typography className="text-xl">
                   {token.firstName}
                 </Typography>
               </div>

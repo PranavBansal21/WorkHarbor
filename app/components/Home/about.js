@@ -69,27 +69,27 @@ export default function About() {
     }, [fadeIn, lastScrollTop]);
 
     return (
-        <div id="about" className="bg-[#987554] h-screen w-screen about flex flex-col justify-evenly" style={{ overflowX: "auto" }}>
-            <Typography className="text-center text-black inika text-5xl">
-                What Makes us Different?
+        <div id="about" className="bg-white h-screen w-screen about flex flex-col justify-evenly" style={{ overflowX: "auto" }}>
+            <Typography className="text-center text-blue-900 text-5xl">
+                How Do We Stand Out ?
             </Typography>
-            <Grid container className={`flex flex-nowrap overflow-x-auto gap-8 px-4 ${fadeIn ? 'animate-fade-right' : 'animate-fade-left'}`} >
+            <Grid container className={`flex flex-nowrap overflow-x-auto gap-16 px-4 ${fadeIn ? 'animate-fade-right' : 'animate-fade-left'}`} >
                 {sections.map((section, index) => (
-                    <Grid key={index} item className="flex-shrink-0 w-96">
+                    <Grid key={index} item className="flex flex-shrink-0 w-96 gap-10 flex-col">
                         <div style={{ width: '400px', height: '200px', overflow: 'hidden', position: 'relative' }}>
                             <Image
                                 src={section.img}
                                 fill={true}
                                 style={{ objectFit: 'cover' }}
                                 alt={section.name}
-                                className="border border-black rounded-lg"
+                                className="rounded-lg"
                             />
                         </div>
-                        <div className="mt-3 flex flex-col gap-2">
-                            <Typography className="inika text-lg text-center font-bold">
+                        <div className="mt-3 flex flex-col gap-7">
+                            <Typography className="text-2xl text-center font-bold">
                                 {section.name}
                             </Typography>
-                            <Typography className="inika">
+                            <Typography className="text-xl text-[#637381]">
                                 {section.des}
                             </Typography>
                         </div>

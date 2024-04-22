@@ -1,7 +1,5 @@
 "use client"
-import { WidthWideTwoTone } from "@mui/icons-material";
 import { Grid, Typography } from "@mui/material";
-import Image from "next/image";
 import Link from "next/link";
 
 function Copyright(props) {
@@ -22,24 +20,25 @@ function Copyright(props) {
     );
 }
 
+const company = ["About us", "Terms and conditions", "Privacy Policy", "WH impact", "Careers"];
+const forCustomers = ["WH reviews", "Categories near you", "Blog", "Contact us"];
+const forPartners = ["Register as a professional"];
+const socialLinks = ["About us", "Terms and conditions", "Privacy Policy", "WH impact", "Careers"];
+
 export default function Contact() {
     return (
-        <div id="contact" className="contact bg-[#DEAF84] pt-4">
+        <div id="contact" className="contact bg-blue-200 pt-4">
             <Grid container className="pl-4">
                 <Grid item xs={3} className="flex flex-col gap-3">
                     <Typography className="inika text-3xl font-bold">
                         Company
                     </Typography>
                     <div className="flex flex-col">
-                        <Typography className="inika text-lg">
-                            About us
-                        </Typography>
-                        <Typography className="inika text-lg">
-                            Terms & Conditions
-                        </Typography>
-                        <Typography className="inika text-lg">
-                            Privaet Policy
-                        </Typography>
+                        {company.map((com, index) => (
+                            <Typography className="text-lg">
+                                {com}
+                            </Typography>
+                        ))}
                     </div>
                 </Grid>
                 <Grid item xs={3}>
