@@ -24,7 +24,7 @@ export default function Services() {
 
   const getAllServices = async () => {
     try {
-      const res = await axios.post("/api/services/allServices");
+      const res = await axios.post("/api/posts/find");
       setServices(res.data);
     } catch (err) {
       return NextResponse.json({ error: err.message, status: 500 });
@@ -35,28 +35,47 @@ export default function Services() {
     getAllServices();
   }, []);
 
-  const [searchValue, setSearchValue] = useState('');
+  const [searchValue, setSearchValue] = useState("");
   const [matchedCities, setMatchedCities] = useState([]);
 
   const handleInputChange = (event) => {
     const { value } = event.target;
     setSearchValue(value);
-    const matched = cityAndStates.filter(city =>
+    const matched = cityAndStates.filter((city) =>
       city.toLowerCase().includes(value.toLowerCase())
     );
     setMatchedCities(matched);
   };
 
-  const handleCityClick = (city) => {
+  const handleTagChange = (event) => {
+    const { value } = event.target;
+    setTagSearch(value);
+  };
+
+  const handleCityClick = async (city) => {
     setSearchValue(city);
     setMatchedCities([]);
+    filterByCity(city);
+  };
+
+  const filterByCity = async (city) => {
+    if (city) {
+      try {
+        const res = await axios.post("/api/filterPosts/location", {
+          searchValue: city,
+        });
+        setServices(res.data);
+      } catch (err) {
+        console.error(err);
+      }
+    }
   };
 
   const truncateText = (text) => {
-    if (text.length <= 80) {
+    if (text.length <= 70) {
       return text;
     }
-    return text.substr(0, 80) + "...";
+    return text.substr(0, 70) + "...";
   };
 
   return (
@@ -64,14 +83,23 @@ export default function Services() {
       <Navbar />
 
       <div className="p-5 flex flex-col gap-5">
-
         <div className="relative ml-3">
           <div className="flex gap-5">
-            <TextField id="city" label="City" variant="outlined" onChange={handleInputChange} value={searchValue} />
+            <TextField
+              id="city"
+              label="City"
+              variant="outlined"
+              onChange={handleInputChange}
+              value={searchValue}
+            />
             <TextField id="search" label="Search" variant="outlined" />
           </div>
-          {searchValue ?
-            <div className={`top-14 absolute z-10 max-h-fit cursor-pointer ${searchValue ? 'bg-white' : ''}`}>
+          {searchValue ? (
+            <div
+              className={`top-14 absolute z-10 max-h-fit cursor-pointer ${
+                searchValue ? "bg-white" : ""
+              }`}
+            >
               <ul className="mx-2 my-2">
                 {matchedCities.slice(0, 25).map((city, index) => (
                   <>
@@ -82,7 +110,10 @@ export default function Services() {
                   </>
                 ))}
               </ul>
-            </div> : <></>}
+            </div>
+          ) : (
+            <></>
+          )}
         </div>
 
         {services ? (
@@ -99,14 +130,18 @@ export default function Services() {
                 justifyContent="center"
                 alignItems="center"
               >
-                <Card sx={{ maxWidth: 400 }} className="border border-gray-300 cursor-pointer" onClick={() => router.push(`${pathname}/${service._id}`)}>
+                <Card
+                  sx={{ maxWidth: 400 }}
+                  className="border border-gray-300 cursor-pointer"
+                  onClick={() => router.push(`${pathname}/${service._id}`)}
+                >
                   <CardContent>
                     <Typography className="inika text-xl">
                       {service.title}
                     </Typography>
                     <div className="flex gap-2 items-center">
                       <Typography className="inika text-gray-400">
-                        {service.city}, {service.state}
+                        {service.location}
                       </Typography>
                     </div>
                   </CardContent>
@@ -115,10 +150,10 @@ export default function Services() {
                       component="img"
                       image={service.frontImg}
                       style={{
-                        minHeight: '250px',
-                        maxHeight: '250px',
-                        width: '100%',
-                        objectFit: 'cover'
+                        minHeight: "250px",
+                        maxHeight: "250px",
+                        width: "100%",
+                        objectFit: "cover",
                       }}
                       alt={service.title}
                     />
@@ -130,8 +165,14 @@ export default function Services() {
                     ))}
                   </CardContent>
 
-                  <CardContent style={{paddingTop: '0'}}>
-                    <div style={{ display: "-webkit-box", WebkitLineClamp: 2, overflow: "hidden" }}>
+                  <CardContent style={{ paddingTop: "0" }}>
+                    <div
+                      style={{
+                        display: "-webkit-box",
+                        WebkitLineClamp: 2,
+                        overflow: "hidden",
+                      }}
+                    >
                       <Typography className="inika mt-2">
                         {truncateText(service.description)}
                       </Typography>
