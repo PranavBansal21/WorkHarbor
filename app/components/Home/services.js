@@ -15,12 +15,12 @@ export default function Services() {
     return (
         <div
             id="services"
-            className="services bg-white relative h-screen w-screen flex flex-col justify-evenly"
+            className="services bg-gray-200 relative h-screen w-screen flex flex-col justify-evenly pt-10"
         >
             <Typography className="text-center text-blue-900 text-5xl">
                 What's in it for you !
             </Typography>
-            <Grid container spacing={2} rowSpacing={10} display='flex' alignItems='center' justifyContent='center' justifyItems='center' className="p-16">
+            <Grid container spacing={2} rowSpacing={8} display='flex' alignItems='center' justifyContent='center' justifyItems='center' className="p-16">
                 {services.map((service, index) => (
                     <Grid key={index} item xs={4} display='flex' flexDirection='column' alignItems='center' justifyContent='center'>
                         <div style={{ width: '450px', height: '250px', overflow: 'hidden', position: 'relative' }}>
