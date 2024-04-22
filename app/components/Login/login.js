@@ -60,80 +60,70 @@ export default function Login() {
   }
 
   return (
-    <Container component="main" maxWidth="xs" className="border-t">
-      <CssBaseline />
-      <Image
-        src="/Images/loginback.jpg"
-        fill={true}
-        quality={100}
-        style={{
-          opacity: 0.7,
-          zIndex: -1
-        }}
-      />
-      <Box
-        sx={{
-          marginTop: 8,
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-        }}
-      >
-        <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
-          <LockOutlinedIcon />
-        </Avatar>
-        <Typography component="h1" variant="h5">
-          Login
-        </Typography>
-        <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
-          <TextField
-            margin="normal"
-            required
-            fullWidth
-            id="email"
-            label="Email Address"
-            name="email"
-            autoComplete="email"
-            autoFocus
-            onChange={(e) => setUser({ ...user, email: e.target.value })}
-            style={black}
-          />
-          <TextField
-            margin="normal"
-            required
-            fullWidth
-            name="password"
-            label="Password"
-            type="password"
-            id="password"
-            autoComplete="current-password"
-            onChange={(e) => setUser({ ...user, password: e.target.value })}
-            style={black}
-          />
-          <Button
-            type="submit"
-            fullWidth
-            variant="contained"
-            sx={{ mt: 3, mb: 2 }}
-            className="bg-blue-500"
-          >
+    <div className="w-screen h-screen bg-gradient-to-r from-teal-100 to-indigo-400 pt-28">
+      <Container component="main" maxWidth="xs">
+        <CssBaseline />
+        <Box
+          sx={{
+            marginTop: 8,
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+          }}
+        >
+          <Typography component="h1" variant="h5">
             Login
-          </Button>
-          <Grid container>
-            <Grid item xs>
-              <Link href="#" variant="body2">
-                Forgot password?
-              </Link>
+          </Typography>
+          <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
+            <TextField
+              margin="normal"
+              required
+              fullWidth
+              id="email"
+              label="Email Address"
+              name="email"
+              autoComplete="email"
+              autoFocus
+              onChange={(e) => setUser({ ...user, email: e.target.value })}
+              style={black}
+            />
+            <TextField
+              margin="normal"
+              required
+              fullWidth
+              name="password"
+              label="Password"
+              type="password"
+              id="password"
+              autoComplete="current-password"
+              onChange={(e) => setUser({ ...user, password: e.target.value })}
+              style={black}
+            />
+            <Button
+              type="submit"
+              fullWidth
+              variant="contained"
+              sx={{ mt: 3, mb: 2 }}
+              className="bg-blue-500"
+            >
+              Login
+            </Button>
+            <Grid container>
+              <Grid item xs>
+                <Link href="#" variant="body2">
+                  Forgot password?
+                </Link>
+              </Grid>
+              <Grid item>
+                <Link href="/signup" variant="body2" className="text-blue-800">
+                  Dont have an account? Sign Up
+                </Link>
+              </Grid>
             </Grid>
-            <Grid item>
-              <Link href="/signup" variant="body2" className="text-blue-800">
-                Dont have an account? Sign Up
-              </Link>
-            </Grid>
-          </Grid>
+          </Box>
         </Box>
-      </Box>
-      <Copyright sx={{ mt: 8, mb: 4 }} />
-    </Container>
+        <Copyright sx={{ mt: 8, mb: 4 }} />
+      </Container>
+    </div>
   );
 }

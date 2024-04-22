@@ -1,31 +1,39 @@
-import { Typography } from "@mui/material";
+"use client"
+import { Card, CardActionArea, CardContent, CardMedia, Typography } from "@mui/material";
 
 export default function PreviousWork({ props }) {
-  // console.log(props);
   return (
-    <div className="px-[80px]">
-      <div className="bg-gray-300 p-4 rounded-3xl">
-        <Typography className="inika font-semibold text-2xl text-center">
-          Previous Works
-        </Typography>
-        <div className="h-[550px] overflow-y-auto no-scrollbar">
-          {props.map((work, index) => (
-            <div
-              key={index}
-              className="rounded-[40px] bg-gray-400 p-5 mt-2 flex"
-            >
-              <div className="w-2/3">
-                <img
-                  src={work.workImg}
-                  className="w-full h-[150px] rounded-[40px]"
-                />
-              </div>
-              <Typography className="inika text-white text-2xl text-center w-1/3">
+    <div className="py-4 px-16 flex flex-col gap-5">
+      <Typography className="inika font-semibold text-2xl text-center">
+        Previous Works
+      </Typography>
+      <div className="h-[620px] overflow-y-auto no-scrollbar">
+        {props.map((work, index) => (
+          <Card key={index} className="border border-gray-300 mb-3">
+            <CardContent>
+              <Typography className="inika text-black text-xl">
                 {work.workTitle}
               </Typography>
-            </div>
-          ))}
-        </div>
+            </CardContent>
+            <CardActionArea>
+              <CardMedia
+                component="img"
+                image={work.workImg}
+                style={{
+                  minHeight: '250px',
+                  maxHeight: '250px',
+                  width: '100%',
+                  objectFit: 'cover'
+                }}
+              />
+            </CardActionArea>
+            <CardContent>
+              <Typography className="inika text-black">
+                {work.workDesc}
+              </Typography>
+            </CardContent>
+          </Card>
+        ))}
       </div>
     </div>
   );
