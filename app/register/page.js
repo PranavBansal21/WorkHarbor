@@ -23,6 +23,8 @@ export default function Register() {
     step3: [],
   });
 
+  
+
   const [step, setStep] = useState(1);
 
   function updateFormData(step, newData) {

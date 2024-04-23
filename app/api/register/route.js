@@ -17,7 +17,6 @@ export async function POST(req) {
     );
 
     const user = await User.findOne({ _id: decodedToken.id });
-    // console.log(x.formData);
     user.role = 1;
 
     const serv = new Service({
@@ -34,11 +33,30 @@ export async function POST(req) {
       previousWorks: [...step3],
       businessEmail: step2.email,
       businessPhone: step2.phone,
+      frontImg: user.image,
+      backImg:
+        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTBwzeftP-__7V4AGUzXOOSX9ALqUHDxRUqigsPGGTaxA&s",
     });
 
     await serv.save();
     await user.save();
-    return NextResponse.json(serv);
+    const newToken = jwt.sign(
+      {
+        id: serv._id,
+        firstName: user.firstName,
+        lastName: user.lastName,
+        email: user.email,
+        phone: user.phone,
+        role: user.role,
+      },
+      process.env.NEXT_PUBLIC_TOKEN_SECRET,
+      {
+        expiresIn: "1d",
+      }
+    );
+    const response = NextResponse.json(serv);
+    response.cookies.set("token", newToken, { httpOnly: true });
+    return response;
   } catch (err) {
     return NextResponse.json({ error: err.message });
   }

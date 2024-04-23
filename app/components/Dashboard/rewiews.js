@@ -45,11 +45,15 @@ export default function Reviews({ props }) {
   const getUser = async () => {
     for (let x of props[1]) {
       const userId = x.owner;
+      console.log(userId);
       const resp = await axios.post("/api/users/getUser", { userId });
-      setUser((prevUser) => ({
-        ...prevUser,
-        [userId]: resp.data.firstName, // Assuming resp.data.name contains the user's name
-      }));
+      console.log(resp.data);
+      if (resp.data) {
+        setUser((prevUser) => ({
+          ...prevUser,
+          [userId]: resp.data.firstName, // Assuming resp.data.name contains the user's name
+        }));
+      }
     }
   };
   return (

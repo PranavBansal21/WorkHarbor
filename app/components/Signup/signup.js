@@ -50,7 +50,7 @@ export default function SignUp() {
       console.log("Signup Successful");
       router.push("/login");
     } catch (err) {
-      console.log("Signup Failed");
+      console.log(err.response.data.error);
     }
   }
 
@@ -65,7 +65,7 @@ export default function SignUp() {
     "& fieldset": {
       borderColor: "#000",
     },
-  }
+  };
 
   return (
     <div className="w-screen h-screen bg-gradient-to-r from-teal-100 to-indigo-400 pt-28">
@@ -79,10 +79,13 @@ export default function SignUp() {
             alignItems: "center",
           }}
         >
-          <Typography className="inika text-2xl">
-            Sign up
-          </Typography>
-          <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
+          <Typography className="inika text-2xl">Sign up</Typography>
+          <Box
+            component="form"
+            noValidate
+            onSubmit={handleSubmit}
+            sx={{ mt: 3 }}
+          >
             <Grid container spacing={2}>
               <Grid item xs={12} sm={6}>
                 <TextField
@@ -107,7 +110,9 @@ export default function SignUp() {
                   label="Last Name"
                   name="lastName"
                   autoComplete="family-name"
-                  onChange={(e) => setUser({ ...user, lastName: e.target.value })}
+                  onChange={(e) =>
+                    setUser({ ...user, lastName: e.target.value })
+                  }
                   style={black}
                 />
               </Grid>
@@ -134,7 +139,7 @@ export default function SignUp() {
                   id="phone"
                   inputProps={{
                     minLength: 10,
-                    maxLength: 10
+                    maxLength: 10,
                   }}
                   onChange={(e) => setUser({ ...user, phone: e.target.value })}
                   style={black}
@@ -149,7 +154,9 @@ export default function SignUp() {
                   type={showPassword ? "text" : "password"}
                   id="password"
                   autoComplete="new-password"
-                  onChange={(e) => setUser({ ...user, password: e.target.value })}
+                  onChange={(e) =>
+                    setUser({ ...user, password: e.target.value })
+                  }
                   InputProps={{
                     endAdornment: (
                       <InputAdornment position="end">

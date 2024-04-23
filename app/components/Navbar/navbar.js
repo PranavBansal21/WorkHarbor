@@ -54,8 +54,8 @@ export default function Navbar() {
   const navbarLinks = [
     { name: "Services", link: "/services" },
     { name: "Posts", link: "/posts" },
-    { name: "New Post", link: "/newPost" }
-  ]
+    { name: "New Post", link: "/newPost" },
+  ];
 
   const [anchorElNav, setAnchorElNav] = useState(null);
   const [anchorElUser, setAnchorElUser] = useState(null);
@@ -104,15 +104,10 @@ export default function Navbar() {
             </Typography>
 
             {navbarLinks.map((link, index) => (
-              <Link
-                key={index}
-                href={link.link}  
-                className="text-xl"
-              >
+              <Link key={index} href={link.link} className="text-xl">
                 {link.name}
               </Link>
             ))}
-
           </div>
 
           {token != null ? (

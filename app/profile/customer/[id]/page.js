@@ -1,5 +1,5 @@
 "use client";
-import { CircularProgress, Grid, Typography } from "@mui/material";
+import { Button, CircularProgress, Grid, Typography } from "@mui/material";
 import Navbar from "@/app/components/Navbar/navbar";
 import LocalPhoneIcon from "@mui/icons-material/LocalPhone";
 import MailIcon from "@mui/icons-material/Mail";
@@ -9,30 +9,144 @@ import { useEffect, useState } from "react";
 import InfoImage from "@/app/components/Dashboard/infoImage";
 import PostedServices from "@/app/components/Profile/postedServices";
 import PostedPosts from "@/app/components/Profile/postedPosts";
+import EditIcon from "@mui/icons-material/Edit";
+import Modal from "@mui/material/Modal";
 
 export default function Profile({ params }) {
   const [pageUser, setPageUser] = useState(null);
+  const [uploadedImages, setUploadedImages] = useState([]);
   const [user, setUser] = useState(null);
+  const [open, setOpen] = useState(false);
   const getUser = async () => {
     const res = await axios.post("/api/users/getTokenData");
     setPageUser(res.data);
     const userId = res.data.id;
     const resp = await axios.post("/api/users/getUser", { userId });
+    console.log(resp.data);
     setUser(resp.data);
   };
   useEffect(() => {
     getUser();
   }, []);
+
+  function handleImageChange(e) {
+    const files = Array.from(e.target.files);
+    setUploadedImages(files);
+  }
+  async function handleSubmit(e) {
+    e.preventDefault();
+    let imageUrl;
+    for (const image of uploadedImages) {
+      const imageData = new FormData();
+      imageData.append("file", image);
+      imageData.append(
+        "upload_preset",
+        process.env.NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET
+      ); // Replace with your upload preset
+      const res = await axios.post(
+        `https://api.cloudinary.com/v1_1/${process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME}/image/upload`,
+        imageData
+      );
+      imageUrl = res.data.secure_url;
+    }
+    const userId = params.id;
+    console.log(imageUrl);
+    if (imageUrl) {
+      const res = await axios.post("/api/users/uploadProfileImage", {
+        imageUrl,
+        userId,
+      });
+      console.log(res.data);
+      if (res.data.status == 200) {
+        location.reload();
+      }
+    }
+  }
+
   return (
     <>
       <Navbar />
-      {pageUser && user && user.posts.length > 0 ? (
+      <Modal
+        open={open}
+        onClose={() => setOpen(false)}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+        className="flex items-center justify-center"
+      >
+        <div className="bg-white p-44">
+          <div className="mb-4">
+            <label className="block text-sm font-medium text-gray-700">
+              Upload files
+            </label>
+            <div className="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-gray-300 border-dashed rounded-md">
+              <div className="space-y-1 text-center">
+                <svg
+                  className="mx-auto h-12 w-12 text-gray-400"
+                  stroke="currentColor"
+                  fill="none"
+                  viewBox="0 0 48 48"
+                  aria-hidden="true"
+                >
+                  <path d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m-4-4l4-4m-4 4V12" />
+                </svg>
+                <div className="flex text-sm text-gray-600">
+                  <label
+                    htmlFor="file-upload"
+                    className="relative cursor-pointer bg-white rounded-md font-medium text-indigo-600 hover:text-indigo-500 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-indigo-500"
+                  >
+                    <span>Upload a file</span>
+                    <input
+                      id="file-upload"
+                      name="file-upload"
+                      type="file"
+                      className="sr-only"
+                      onChange={handleImageChange}
+                      multiple
+                    />
+                  </label>
+                  <p className="pl-1">or drag and drop</p>
+                </div>
+                <p className="text-xs text-gray-500">
+                  PNG, JPG, GIF up to 10MB
+                </p>
+              </div>
+            </div>
+            {uploadedImages.length > 0 &&
+              uploadedImages.map((image, index) => (
+                <img
+                  key={index}
+                  src={URL.createObjectURL(image)}
+                  alt={`Uploaded ${index}`}
+                  style={{
+                    width: "100%",
+                    height: "200px",
+                    objectFit: "cover",
+                  }}
+                />
+              ))}
+          </div>
+          <Button
+            variant="contained"
+            className="bg-blue-500 hover:bg-blue-800"
+            onClick={handleSubmit}
+          >
+            Update Profile
+          </Button>
+        </div>
+      </Modal>
+      {pageUser && user ? (
         <div className="px-10">
           <Grid container>
             <Grid item xs={8} className="ml-2 mt-5">
-              <InfoImage
-                props={["/Images/back.jpg", "/Images/profilePic2.jpg"]}
-              />
+              <div className="relative">
+                <InfoImage props={["/Images/back.jpg", user.image]} />
+                <div
+                  className="absolute left-48 top-88 cursor-pointer rounded-full p-1 bg-gray-300"
+                  onClick={() => setOpen(true)}
+                >
+                  <EditIcon />
+                </div>
+              </div>
             </Grid>
           </Grid>
 
