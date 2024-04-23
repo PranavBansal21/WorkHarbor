@@ -29,28 +29,21 @@ export default function Navbar() {
     }
   };
   const goToProfile = async () => {
-    try {
-      const tokenData = await axios.post("/api/users/getTokenData");
-      if (tokenData.data.role == 0)
-        router.push(`/profile/customer/${tokenData.data.id}`);
-      else if (tokenData.data.role == 1) {
-        router.push(`/profile/provider/${tokenData.data.id}`);
-      }
-      return NextResponse.json({ message: "dfj" });
-    } catch (err) {
-      return NextResponse.json({ error: error.message, status: 500 });
+    const tokenData = await axios.post("/api/users/getTokenData");
+    if (tokenData.data.role == 0)
+      router.push(`/profile/customer/${tokenData.data.id}`);
+    else if (tokenData.data.role == 1) {
+      router.push(`/profile/provider/${tokenData.data.id}`);
     }
   };
 
   const register = async () => {
     try {
-
-      router.push(`/register`)
-
+      router.push(`/register`);
     } catch (err) {
       console.log("error routing to the register page");
     }
-  }
+  };
 
   const settings = [
     { name: "Logout", execute: logout },
@@ -75,7 +68,7 @@ export default function Navbar() {
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
   };
-  
+
   const [token, setToken] = useState(null);
   const tokenData = async () => {
     const res = await axios.post("/api/users/getTokenData");
@@ -111,9 +104,7 @@ export default function Navbar() {
                     <Avatar alt="Remy Sharp" src="/Images/profilePic.jpg" />
                   </IconButton>
                 </Tooltip>
-                <Typography className="text-xl">
-                  {token.firstName}
-                </Typography>
+                <Typography className="text-xl">{token.firstName}</Typography>
               </div>
               <Menu
                 sx={{ mt: "45px" }}
