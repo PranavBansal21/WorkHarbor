@@ -39,6 +39,7 @@ export default function Reviews({ props }) {
       token,
       serviceProvider,
     });
+    location.reload();
   };
   const [user, setUser] = useState([]);
   const getUser = async () => {

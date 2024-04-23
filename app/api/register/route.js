@@ -19,12 +19,10 @@ export async function POST(req) {
     const user = await User.findOne({ _id: decodedToken.id });
     // console.log(x.formData);
     user.role = 1;
-    user.phone = step2.phone;
-    user.email = step2.email;
 
     const serv = new Service({
       title: step1.businessName,
-      description: "djbcj",
+      description: step2.about,
       owner: user,
       city: step1.city,
       state: step1.state,
@@ -34,6 +32,8 @@ export async function POST(req) {
       area: step1.area,
       landMark: step1.landMark,
       previousWorks: [...step3],
+      businessEmail: step2.email,
+      businessPhone: step2.phone,
     });
 
     await serv.save();

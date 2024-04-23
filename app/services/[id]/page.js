@@ -47,8 +47,8 @@ export default function ServicePage({ params }) {
                     details.title,
                     details.city,
                     details.state,
-                    details.owner.phone,
-                    details.owner.email,
+                    details.businessPhone,
+                    details.businessEmail,
                   ]}
                 />
               </Grid>
@@ -70,7 +70,13 @@ export default function ServicePage({ params }) {
             </Grid>
             <Grid xs={5}>
               {gridHeight ? (
-                <PreviousWork props={details.previousWorks} gridHeight={gridHeight} />) : <CircularProgress />}
+                <PreviousWork
+                  props={details.previousWorks}
+                  gridHeight={gridHeight}
+                />
+              ) : (
+                <CircularProgress />
+              )}
             </Grid>
           </Grid>
         </div>

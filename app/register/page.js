@@ -35,7 +35,7 @@ export default function Register() {
   const handleStepSubmit = () => {
     setStep(step + 1);
   };
-
+  console.log(formData);
   const handleSubmit = async () => {
     // console.log(formData);
     const res = await axios.post("/api/register", { formData });
