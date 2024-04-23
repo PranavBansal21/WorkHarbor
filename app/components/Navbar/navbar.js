@@ -51,6 +51,12 @@ export default function Navbar() {
     { name: "Register", execute: register },
   ];
 
+  const navbarLinks = [
+    { name: "Services", link: "/services" },
+    { name: "Posts", link: "/posts" },
+    { name: "New Post", link: "/newPost" }
+  ]
+
   const [anchorElNav, setAnchorElNav] = useState(null);
   const [anchorElUser, setAnchorElUser] = useState(null);
 
@@ -97,12 +103,16 @@ export default function Navbar() {
               WorkHarbor
             </Typography>
 
-            <Link
-              href="/services"
-              className="text-xl"
-            >
-              Services
-            </Link>
+            {navbarLinks.map((link, index) => (
+              <Link
+                key={index}
+                href={link.link}  
+                className="text-xl"
+              >
+                {link.name}
+              </Link>
+            ))}
+
           </div>
 
           {token != null ? (

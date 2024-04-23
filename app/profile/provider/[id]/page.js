@@ -1,13 +1,6 @@
 "use client";
 import {
-  Card,
-  CardActionArea,
-  CardContent,
-  CardMedia,
-  CircularProgress,
-  Grid,
-  Typography,
-} from "@mui/material";
+  CircularProgress, Grid, Typography } from "@mui/material";
 import Navbar from "@/app/components/Navbar/navbar";
 import LocalPhoneIcon from "@mui/icons-material/LocalPhone";
 import MailIcon from "@mui/icons-material/Mail";
@@ -19,7 +12,6 @@ import { getTokenData } from "@/utils/getTokenData";
 import { useEffect, useState } from "react";
 import InfoImage from "@/app/components/Dashboard/infoImage";
 import PostedServices from "@/app/components/Profile/postedServices";
-import PreviousWork from "@/app/components/Dashboard/previousWork";
 import PostedPosts from "@/app/components/Profile/postedPosts";
 
 export default function Profile({ params }) {

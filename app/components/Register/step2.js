@@ -1,7 +1,7 @@
 "use client";
 import React from "react";
 import { useState } from "react";
-import { Button, Grid, TextField } from "@mui/material";
+import { Button, CardMedia, Grid, TextField } from "@mui/material";
 import PropTypes from "prop-types";
 import LinearProgress from "@mui/material/LinearProgress";
 import Navbar from "@/app/components/Navbar/navbar";
@@ -69,11 +69,20 @@ export default function Step2({ formData, updateFormData, onSubmit }) {
     <>
       <Navbar />
       <div className="m-16">
-        <Grid container className="flex">
+        <Grid container className="flex" spacing={3}>
           <Grid item xs={6}>
-            <img src="/Images/back.jpg" className="object-cover p-2" />
+            <CardMedia
+              component="img"
+              image="/Images/register1.jpg"
+              style={{
+                minHeight: '510px',
+                maxHeight: '510px',
+                width: '100%',
+                objectFit: 'cover'
+              }}
+            />
           </Grid>
-          <Grid item xs={6} className="p-2">
+          <Grid item xs={6} >
             <Box sx={{ width: "100%" }}>
               <LinearProgressWithLabel value={progress} />
             </Box>
@@ -81,6 +90,14 @@ export default function Step2({ formData, updateFormData, onSubmit }) {
               Enter other Business Related Details
             </Typography>
             <div className="flex flex-col gap-2">
+            <TextField
+                name="about"
+                label="About Business"
+                value={currFormData.about}
+                onChange={handleChange}
+                required
+                fullWidth
+              />
               <TextField
                 name="phone"
                 label="Phone Number"

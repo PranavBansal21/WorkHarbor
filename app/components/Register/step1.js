@@ -1,7 +1,7 @@
 "use client";
 import React from "react";
 import { useState } from "react";
-import { Button, Grid, TextField } from "@mui/material";
+import { Button, CardMedia, Grid, TextField } from "@mui/material";
 import Navbar from "@/app/components/Navbar/navbar";
 import PropTypes from "prop-types";
 import LinearProgress from "@mui/material/LinearProgress";
@@ -44,10 +44,6 @@ export default function Step1({ formData, updateFormData, onSubmit }) {
   }
 
   LinearProgressWithLabel.propTypes = {
-    /**
-     * The value of the progress indicator for the determinate and buffer variants.
-     * Value between 0 and 100.
-     */
     value: PropTypes.number.isRequired,
   };
   const [progress, setProgress] = React.useState(0);
@@ -56,11 +52,20 @@ export default function Step1({ formData, updateFormData, onSubmit }) {
     <>
       <Navbar />
       <div className="m-16">
-        <Grid container className="flex">
-          <Grid item xs={6}>
-            <img src="/Images/back.jpg" className="object-cover p-2" />
+        <Grid container className="flex" spacing={4}>
+          <Grid item xs={6} maxHeight={400} >
+            <CardMedia
+              component="img"
+              image="/Images/register2.jpg"
+              style={{
+                minHeight: '550px',
+                maxHeight: '550px',
+                width: '100%',
+                objectFit: 'cover'
+              }}
+            />
           </Grid>
-          <Grid item xs={6} className="p-2">
+          <Grid item xs={6} className="px-2">
             <Box sx={{ width: "100%" }}>
               <LinearProgressWithLabel value={progress} />
             </Box>

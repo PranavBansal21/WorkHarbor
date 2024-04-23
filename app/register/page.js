@@ -19,11 +19,11 @@ export default function Register() {
       city: "",
       state: "",
     },
-    step2: { phone: undefined, email: "" },
+    step2: { about: "", phone: undefined, email: "" },
     step3: [],
   });
 
-  const [step, setStep] = useState(3);
+  const [step, setStep] = useState(1);
 
   function updateFormData(step, newData) {
     setFormData((prevFormData) => ({

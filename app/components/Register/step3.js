@@ -7,9 +7,11 @@ import {
   Button,
   TextField,
   IconButton,
+  CardMedia,
 } from "@mui/material";
 import Navbar from "@/app/components/Navbar/navbar";
 import LinearProgress from "@mui/material/LinearProgress";
+import PropTypes from "prop-types";
 import DeleteIcon from "@mui/icons-material/Delete";
 
 export default function Step3({ formData, updateFormData, onSubmit }) {
@@ -17,7 +19,6 @@ export default function Step3({ formData, updateFormData, onSubmit }) {
   const [uploading, setUploading] = useState(false);
   const [uploadError, setUploadError] = useState(null);
   const maxImages = 5;
-  const [progress, setProgress] = useState(66);
 
   // Cloudinary configuration
   const uploadPreset = process.env.NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET; // Replace with your Cloudinary upload preset
@@ -95,21 +96,46 @@ export default function Step3({ formData, updateFormData, onSubmit }) {
     onSubmit();
   };
 
+  function LinearProgressWithLabel(props) {
+    return (
+      <Box sx={{ display: "flex", alignItems: "center" }}>
+        <Box sx={{ width: "100%", mr: 1 }}>
+          <LinearProgress variant="determinate" {...props} />
+        </Box>
+        <Box sx={{ minWidth: 35 }}>
+          <Typography variant="body2" color="text.secondary">{`${Math.round(
+            props.value
+          )}%`}</Typography>
+        </Box>
+      </Box>
+    );
+  }
+
+  LinearProgressWithLabel.propTypes = {
+    value: PropTypes.number.isRequired,
+  };
+  const [progress, setProgress] = useState(66);
+
   return (
     <>
       <Navbar />
       <div className="m-16">
         <Grid container className="flex">
           <Grid item xs={6}>
-            <img
-              src="/Images/back.jpg"
-              className="object-cover p-2"
-              alt="Background"
+            <CardMedia
+              component="img"
+              image="/Images/register3.jpg"
+              style={{
+                minHeight: '550px',
+                maxHeight: '550px',
+                width: '100%',
+                objectFit: 'cover'
+              }}
             />
           </Grid>
           <Grid item xs={6} className="p-2">
             <Box sx={{ width: "100%" }}>
-              <LinearProgress variant="determinate" value={progress} />
+              <LinearProgressWithLabel value={progress} />
             </Box>
             <Typography className="inika text-xl mb-2 font-bold">
               ADD PHOTOS
