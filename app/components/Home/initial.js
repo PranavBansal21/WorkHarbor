@@ -9,7 +9,7 @@ export default function Initial() {
       <div className="absolute inset-0 bg-customHome opacity-90" />
 
       <div className="absolute w-min top-[45%] -translate-y-1/2 text-center">
-        <h1 className="inika animate-typing overflow-hidden whitespace-nowrap border-r-4 border-r-black pr-5 text-6xl text-white font-bold">
+        <h1 className="inika animate-typing overflow-hidden whitespace-nowrap border-r-4 border-r-white pr-5 text-6xl text-white font-bold">
           Connecting Service Providers with Seekers
         </h1>
         <br />

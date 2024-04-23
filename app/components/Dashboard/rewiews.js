@@ -28,8 +28,8 @@ export default function Reviews({ props }) {
     const rating = formData.get("half-rating");
     const comment = formData.get("comment");
 
-    console.log("Rating:", rating);
-    console.log("Comment:", comment);
+    // console.log("Rating:", rating);
+    // console.log("Comment:", comment);
 
     const serviceProvider = props[2].id;
 

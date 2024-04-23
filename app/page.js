@@ -93,7 +93,7 @@ export default function Home() {
   const [token, setToken] = useState(null);
   const tokenData = async () => {
     const res = await axios.post("/api/users/getTokenData");
-    console.log(res.data);
+    // console.log(res.data);
     if ("id" in res.data) {
       setToken(res.data);
     } else {
@@ -118,7 +118,7 @@ export default function Home() {
             </Link>
           ))}
         </div>
-        {console.log(token)}
+        {/* {console.log(token)} */}
         {token == null ? (
           <div className="z-10 flex gap-5 text-2xl">
             <div>

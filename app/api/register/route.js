@@ -17,7 +17,7 @@ export async function POST(req) {
     );
 
     const user = await User.findOne({ _id: decodedToken.id });
-    console.log(x.formData);
+    // console.log(x.formData);
     user.role = 1;
     user.phone = step2.phone;
     user.email = step2.email;

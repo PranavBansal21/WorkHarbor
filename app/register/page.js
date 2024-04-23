@@ -37,9 +37,9 @@ export default function Register() {
   };
 
   const handleSubmit = async () => {
-    console.log(formData);
+    // console.log(formData);
     const res = await axios.post("/api/register", { formData });
-    console.log(res.data);
+    // console.log(res.data);
     router.push("/services");
   };
   //console.log(formData)
