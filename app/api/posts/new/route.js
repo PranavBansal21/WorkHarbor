@@ -25,7 +25,7 @@ export async function POST(req) {
       tags: selectedTags,
       owner: token.id,
     });
-    console.log(imageUrls);
+    // console.log(imageUrls);
     const user = await User.findById(token.id);
     await newPost.save();
     user.posts.push(newPost);

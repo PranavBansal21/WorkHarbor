@@ -6,7 +6,7 @@ cloudinary.config({
   api_secret: process.env.NEXT_PUBLIC_CLOUDINARY_API_SECRET,
 });
 
-console.log(cloudinary.config());
+// console.log(cloudinary.config());
 export default cloudinary;
 // const uploadImage = async (imagePath) => {
 //   const options = {

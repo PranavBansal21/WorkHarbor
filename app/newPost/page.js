@@ -70,7 +70,7 @@ export default function NewPost() {
     };
 
     const res = await axios.post("/api/posts/new", postData);
-    console.log(res.data);
+    // console.log(res.data);
     if (res.data.status == 200) {
       router.push("/posts");
     }

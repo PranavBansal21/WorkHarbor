@@ -87,14 +87,23 @@ export default function Navbar() {
     <AppBar position="static" className="bg-customHome z-100">
       <Container maxWidth="xl">
         <Toolbar disableGutters className="p-2 justify-between">
-          <Typography
-            noWrap
-            component="a"
-            href="/"
-            className="irishgrover mr-2 text-3xl"
-          >
-            WorkHarbor
-          </Typography>
+          <div className="flex gap-10 items-center">
+            <Typography
+              noWrap
+              component="a"
+              href="/"
+              className="irishgrover mr-2 text-3xl"
+            >
+              WorkHarbor
+            </Typography>
+
+            <Link
+              href="/services"
+              className="text-xl"
+            >
+              Services
+            </Link>
+          </div>
 
           {token != null ? (
             <Box sx={{ flexGrow: 0 }}>
