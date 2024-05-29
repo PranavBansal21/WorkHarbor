@@ -91,11 +91,23 @@ export default function Home() {
     tokenData();
   }, []);
   const [token, setToken] = useState(null);
+  const [user, setUser] = useState(null);
   const tokenData = async () => {
     const res = await axios.post("/api/users/getTokenData");
     // console.log(res.data);
     if ("id" in res.data) {
       setToken(res.data);
+      if (res.data.role == 0) {
+        const userId = res.data.id;
+        const resp = await axios.post("/api/users/getUser", { userId });
+        setUser(resp.data);
+      } else {
+        const userid = res.data.id;
+        // console.log(userid);
+        const resp = await axios.post("/api/services/findService", { userid });
+        // console.log(resp.data);
+        setUser(resp.data.owner);
+      }
     } else {
       setToken(null);
     }
@@ -119,31 +131,12 @@ export default function Home() {
           ))}
         </div>
         {/* {console.log(token)} */}
-        {token == null ? (
-          <div className="z-10 flex gap-5 text-2xl">
-            <div>
-              <Link
-                href="/login"
-                className="hover:underline decoration-4 underline-offset-8"
-              >
-                Login
-              </Link>
-            </div>
-            <div>
-              <Link
-                href="/signup"
-                className="hover:underline decoration-4 underline-offset-8"
-              >
-                Signup
-              </Link>
-            </div>
-          </div>
-        ) : (
+        {token != null && user ? (
           <Box sx={{ flexGrow: 0 }}>
             <div className="flex gap-3 items-center">
               <Tooltip title="Open settings">
                 <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                  <Avatar alt="Remy Sharp" src="/Images/profilePic.jpg" />
+                  <Avatar alt="Remy Sharp" src={user.image} />
                 </IconButton>
               </Tooltip>
               <Typography className="inika text-xl">
@@ -175,6 +168,25 @@ export default function Home() {
               ))}
             </Menu>
           </Box>
+        ) : (
+          <div className="z-10 flex gap-5 text-2xl">
+            <div>
+              <Link
+                href="/login"
+                className="hover:underline decoration-4 underline-offset-8"
+              >
+                Login
+              </Link>
+            </div>
+            <div>
+              <Link
+                href="/signup"
+                className="hover:underline decoration-4 underline-offset-8"
+              >
+                Signup
+              </Link>
+            </div>
+          </div>
         )}
       </div>
 

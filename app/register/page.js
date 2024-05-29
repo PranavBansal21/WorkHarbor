@@ -19,11 +19,9 @@ export default function Register() {
       city: "",
       state: "",
     },
-    step2: { about: "", phone: undefined, email: "" },
+    step2: { about: "", phone: undefined, email: "", tags: [] },
     step3: [],
   });
-
-  
 
   const [step, setStep] = useState(1);
 
@@ -37,14 +35,10 @@ export default function Register() {
   const handleStepSubmit = () => {
     setStep(step + 1);
   };
-  console.log(formData);
   const handleSubmit = async () => {
-    // console.log(formData);
     const res = await axios.post("/api/register", { formData });
-    // console.log(res.data);
     router.push("/services");
   };
-  //console.log(formData)
   return (
     <>
       {step === 1 && (

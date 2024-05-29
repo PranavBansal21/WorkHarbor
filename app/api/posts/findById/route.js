@@ -6,7 +6,7 @@ export async function POST(req) {
   try {
     const { postId } = await req.json();
     const post = await Post.findById(postId).populate("owner");
-    console.log(post);
+    // console.log(post);
     return NextResponse.json(post);
   } catch (error) {
     return NextResponse.json({ error: error.message, status: 500 });

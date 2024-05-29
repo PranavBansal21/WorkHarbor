@@ -37,7 +37,7 @@ export default function Services() {
 
   const [searchValue, setSearchValue] = useState("");
   const [matchedCities, setMatchedCities] = useState([]);
-  const [tagSearch,setTagSearch] = useState(null);
+  const [tagSearch, setTagSearch] = useState(null);
 
   const handleInputChange = (event) => {
     const { value } = event.target;
@@ -48,10 +48,10 @@ export default function Services() {
     setMatchedCities(matched);
   };
 
-  const handleTagChange = (event) =>{
+  const handleTagChange = (event) => {
     const { value } = event.target;
     setTagSearch(value);
-  }
+  };
 
   const handleCityClick = async (city) => {
     setSearchValue(city);
@@ -94,7 +94,13 @@ export default function Services() {
               onChange={handleInputChange}
               value={searchValue}
             />
-            <TextField id="search" label="Search" variant="outlined" value={tagSearch} onChange={handleTagChange}/>
+            {/* <TextField
+              id="search"
+              label="Search"
+              variant="outlined"
+              value={tagSearch}
+              onChange={handleTagChange}
+            /> */}
           </div>
           {searchValue ? (
             <div
@@ -156,12 +162,13 @@ export default function Services() {
                         maxHeight: "250px",
                         width: "100%",
                         objectFit: "cover",
+                        minWidth: "400px",
                       }}
                       alt={service.title}
                     />
                   </CardActionArea>
 
-                  <CardContent className="flex gap-5">
+                  <CardContent className="flex gap-5 flex-wrap" style={{ maxHeight: "50px", overflow: 'hidden' }}>
                     {service.tags.slice(0, 3).map((tag, index) => (
                       <Chip label={tag} />
                     ))}
@@ -184,6 +191,7 @@ export default function Services() {
                         display: "-webkit-box",
                         WebkitLineClamp: 2,
                         overflow: "hidden",
+                        minHeight: "55px",
                       }}
                     >
                       <Typography className="inika mt-2">

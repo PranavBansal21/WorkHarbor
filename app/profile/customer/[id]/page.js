@@ -22,7 +22,6 @@ export default function Profile({ params }) {
     setPageUser(res.data);
     const userId = res.data.id;
     const resp = await axios.post("/api/users/getUser", { userId });
-    console.log(resp.data);
     setUser(resp.data);
   };
   useEffect(() => {
@@ -50,13 +49,11 @@ export default function Profile({ params }) {
       imageUrl = res.data.secure_url;
     }
     const userId = params.id;
-    console.log(imageUrl);
     if (imageUrl) {
       const res = await axios.post("/api/users/uploadProfileImage", {
         imageUrl,
         userId,
       });
-      console.log(res.data);
       if (res.data.status == 200) {
         location.reload();
       }

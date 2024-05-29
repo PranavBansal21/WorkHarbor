@@ -76,10 +76,20 @@ export default function Navbar() {
   };
 
   const [token, setToken] = useState(null);
+  const [user, setUser] = useState(null);
   const tokenData = async () => {
     const res = await axios.post("/api/users/getTokenData");
     if ("id" in res.data) {
       setToken(res.data);
+      if (res.data.role == 0) {
+        const userId = res.data.id;
+        const resp = await axios.post("/api/users/getUser", { userId });
+        setUser(resp.data);
+      } else {
+        const userid = res.data.id;
+        const resp = await axios.post("/api/services/findService", { userid });
+        setUser(resp.data.owner);
+      }
     } else {
       setToken(null);
     }
@@ -110,12 +120,12 @@ export default function Navbar() {
             ))}
           </div>
 
-          {token != null ? (
+          {token != null && user ? (
             <Box sx={{ flexGrow: 0 }}>
               <div className="flex gap-3 items-center">
                 <Tooltip title="Open settings">
                   <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                    <Avatar alt="Remy Sharp" src="/Images/profilePic.jpg" />
+                    <Avatar alt="Remy Sharp" src={user.image} />
                   </IconButton>
                 </Tooltip>
                 <Typography className="text-xl">{token.firstName}</Typography>

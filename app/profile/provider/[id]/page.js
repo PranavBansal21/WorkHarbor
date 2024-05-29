@@ -57,14 +57,11 @@ export default function Profile({ params }) {
       imageUrl = res.data.secure_url;
     }
     const userId = params.id;
-    console.log(userId);
-    console.log(imageUrl);
     if (imageUrl) {
       const res = await axios.post("/api/services/uploadProfileImage", {
         imageUrl,
         userId,
       });
-      console.log(res.data);
       if (res.data.status == 200) {
         location.reload();
       }

@@ -6,7 +6,7 @@ export async function POST(req) {
   try {
     const { imageUrl, userId } = await req.json();
     const user = await Service.findById(userId).populate("owner");
-    console.log(user);
+    // console.log(user);
     const pageowner = user.owner;
     pageowner.image = imageUrl;
     user.frontImg = imageUrl;

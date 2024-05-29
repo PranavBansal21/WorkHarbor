@@ -18,7 +18,6 @@ export default function CertainPost({ params }) {
   const findPostData = async () => {
     const res = await axios.post("/api/posts/findById", { postId });
     setPostData(res.data);
-    console.log(res.data);
   };
   useEffect(() => {
     findPostData();

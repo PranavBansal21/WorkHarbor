@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useEffect } from "react";
 import { useState } from "react";
 import { Button, CardMedia, Grid, TextField } from "@mui/material";
 import PropTypes from "prop-types";
@@ -24,12 +24,17 @@ export default function Step2({ formData, updateFormData, onSubmit }) {
     }));
   }
 
+  useEffect(
+    () =>
+      setCurrFormData((prevData) => ({
+        ...prevData,
+        tags: selectedTags,
+      })),
+    [selectedTags]
+  );
+
   function handleSubmit(e) {
     e.preventDefault();
-    setCurrFormData((prevData) => ({
-      ...prevData,
-      [tags]: selectedTags,
-    }));
     updateFormData(currFormData);
     onSubmit();
   }
@@ -75,14 +80,14 @@ export default function Step2({ formData, updateFormData, onSubmit }) {
               component="img"
               image="/Images/register1.jpg"
               style={{
-                minHeight: '510px',
-                maxHeight: '510px',
-                width: '100%',
-                objectFit: 'cover'
+                minHeight: "510px",
+                maxHeight: "510px",
+                width: "100%",
+                objectFit: "cover",
               }}
             />
           </Grid>
-          <Grid item xs={6} >
+          <Grid item xs={6}>
             <Box sx={{ width: "100%" }}>
               <LinearProgressWithLabel value={progress} />
             </Box>
@@ -90,7 +95,7 @@ export default function Step2({ formData, updateFormData, onSubmit }) {
               Enter other Business Related Details
             </Typography>
             <div className="flex flex-col gap-2">
-            <TextField
+              <TextField
                 name="about"
                 label="About Business"
                 value={currFormData.about}

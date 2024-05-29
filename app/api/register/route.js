@@ -18,6 +18,7 @@ export async function POST(req) {
 
     const user = await User.findOne({ _id: decodedToken.id });
     user.role = 1;
+    // console.log(step2);
 
     const serv = new Service({
       title: step1.businessName,
@@ -34,6 +35,7 @@ export async function POST(req) {
       businessEmail: step2.email,
       businessPhone: step2.phone,
       frontImg: user.image,
+      tags: step2.tags,
       backImg:
         "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTBwzeftP-__7V4AGUzXOOSX9ALqUHDxRUqigsPGGTaxA&s",
     });

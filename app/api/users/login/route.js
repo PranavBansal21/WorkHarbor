@@ -3,6 +3,7 @@ import User from "@/models/userModel.js";
 import { NextResponse } from "next/server";
 import { compareSync } from "bcryptjs";
 import jwt from "jsonwebtoken";
+import Service from "@/models/serviceModel";
 
 connect();
 
@@ -18,17 +19,42 @@ export async function POST(req) {
     if (!passCheck) {
       return NextResponse.json({ error: "Wrong password" }, { status: 400 });
     }
-    const tokenData = {
-      id: user._id,
-      firstName: user.firstName,
-      lastName: user.lastName,
-      email: user.email,
-      phone: user.phone,
-      role:user.role,
-    };
-    const token = await jwt.sign(tokenData, process.env.NEXT_PUBLIC_TOKEN_SECRET, {
-      expiresIn: "1d",
-    });
+    let tokenData;
+    if (user.role == 1) {
+      const allServ = await Service.find();
+      let uid;
+      // console.log(user._id);
+      //console.log(allServ);
+      for (let serv of allServ) {
+        if (serv.owner._id.equals(user._id)) {
+          uid = serv._id;
+        }
+      }
+      tokenData = {
+        id: uid,
+        firstName: user.firstName,
+        lastName: user.lastName,
+        email: user.email,
+        phone: user.phone,
+        role: user.role,
+      };
+    } else {
+      tokenData = {
+        id: user._id,
+        firstName: user.firstName,
+        lastName: user.lastName,
+        email: user.email,
+        phone: user.phone,
+        role: user.role,
+      };
+    }
+    const token = await jwt.sign(
+      tokenData,
+      process.env.NEXT_PUBLIC_TOKEN_SECRET,
+      {
+        expiresIn: "1d",
+      }
+    );
     const response = NextResponse.json({
       message: "Login successful",
       success: true,

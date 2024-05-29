@@ -1,4 +1,5 @@
 import Post from "@/models/postModel";
+import Service from "@/models/serviceModel";
 import User from "@/models/userModel";
 import { NextResponse } from "next/server";
 
@@ -15,6 +16,14 @@ export async function POST(req) {
       token,
     } = await req.json();
 
+    // console.log(imageUrls);
+    let user;
+    if (token.role == 0) {
+      user = await User.findById(token.id);
+    } else {
+      const sp = await Service.findById(token.id).populate("owner");
+      user = sp.owner;
+    }
     const newPost = new Post({
       title,
       description,
@@ -23,10 +32,9 @@ export async function POST(req) {
       phone,
       image: imageUrls[0],
       tags: selectedTags,
-      owner: token.id,
+      owner: user._id,
     });
-    // console.log(imageUrls);
-    const user = await User.findById(token.id);
+    // console.log(user);
     await newPost.save();
     user.posts.push(newPost);
     await user.save();
