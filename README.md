@@ -9,9 +9,9 @@ WorkHarbor is a platform to bridge the gap between service seekers and proficien
 * Cloudinary
 * Vercel
 
-# Software Documentation
+## Software Documentation
 - [Software Requirements Specifications](https://drive.google.com/file/d/1YLLF2kbUq_KdW7IKuIPk6M0jadM555ZI/view?usp=sharing)
-- [Software Design Specification]()
+- [Software Design Specification](https://drive.google.com/file/d/13VexEHlozz6XZcJrQHRkDyxLx4LUItxc/view?usp=sharing)
 
 ## 🚀 Features
 
@@ -32,6 +32,26 @@ WorkHarbor is a platform to bridge the gap between service seekers and proficien
 
 6. **Reviews and Ratings:**
    - The platform incorporates a comprehensive system for reviews and ratings of service providers.
+
+## 📷 Photos
+<table>
+  <tr>
+    <td><img maxW="50%" src="https://raw.githubusercontent.com/PranavBansal21/WorkHarbor_Helper/main/Screenshot%202024-06-24%20011143.png"  /></td>
+    <td><img maxW="50%" src="https://raw.githubusercontent.com/PranavBansal21/WorkHarbor_Helper/main/Screenshot%202024-06-24%20011242.png"   /></td>
+  </tr>
+  <tr>
+   <td><img src="https://raw.githubusercontent.com/PranavBansal21/WorkHarbor_Helper/main/Screenshot%202024-06-24%20011339.png"  /></td>
+    <td><img src="https://raw.githubusercontent.com/PranavBansal21/WorkHarbor_Helper/main/Screenshot%202024-06-24%20011423.png" /></td>
+  </tr>
+  <tr>
+    <td><img src="https://raw.githubusercontent.com/PranavBansal21/WorkHarbor_Helper/main/Screenshot%202024-06-24%20011652.png"  /></td>
+    <td><img src="https://raw.githubusercontent.com/PranavBansal21/WorkHarbor_Helper/main/Screenshot%202024-06-24%20011855.png"  /></td>
+  </tr>
+  <tr>
+    <td><img src="https://raw.githubusercontent.com/PranavBansal21/WorkHarbor_Helper/main/Screenshot%202024-06-24%20012125.png"   /></td>
+    <td><img src="https://raw.githubusercontent.com/PranavBansal21/WorkHarbor_Helper/main/Screenshot%202024-06-24%20012414.png"   /></td>
+  </tr>
+</table>
 
 ## Dependencies
 You need npm/yarn installed in your local machine in order to run this app.
@@ -62,4 +82,6 @@ You need npm/yarn installed in your local machine in order to run this app.
 - [Nextjs](https://nextjs.org/docs)
 - [Cloudinary Documentation](https://cloudinary.com/documentation)
 - [Get started with Material UI](https://mui.com/material-ui/getting-started/)
+
+
 
