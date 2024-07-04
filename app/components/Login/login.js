@@ -7,21 +7,16 @@ import TextField from "@mui/material/TextField";
 import Link from "@mui/material/Link";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
-import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { useRouter } from "next/navigation";
 import axios from "axios";
-import Image from "next/image";
+import Snackbar from "@mui/material/Snackbar";
+import MuiAlert from "@mui/material/Alert";
 
 function Copyright(props) {
   return (
-    <Typography
-      variant="body2"
-      color="black"
-      align="center"
-      {...props}
-    >
+    <Typography variant="body2" color="black" align="center" {...props}>
       {"Copyright © "}
       <Link color="inherit" href="https://mui.com/">
         TaskHarbor
@@ -38,6 +33,20 @@ export default function Login() {
     email: "",
     password: "",
   });
+  const [error, setError] = React.useState("");
+  const [open, setOpen] = React.useState(false);
+
+  const handleClick = () => {
+    setOpen(true);
+  };
+
+  const handleClose = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+    setOpen(false);
+  };
+
   async function handleSubmit(event) {
     event.preventDefault();
     try {
@@ -45,7 +54,10 @@ export default function Login() {
       console.log("Login Successful");
       router.push("/");
     } catch (error) {
-      console.log("Login Failed");
+      const errorMsg =
+        error.response?.data?.error || "Invalid username or password";
+      setError(errorMsg);
+      handleClick();
     }
   }
 
@@ -57,7 +69,7 @@ export default function Login() {
     "& fieldset": {
       borderColor: "#000",
     },
-  }
+  };
 
   return (
     <div className="w-screen h-screen bg-gradient-to-r from-teal-100 to-indigo-400 pt-28">
@@ -74,7 +86,12 @@ export default function Login() {
           <Typography component="h1" variant="h5">
             Login
           </Typography>
-          <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
+          <Box
+            component="form"
+            onSubmit={handleSubmit}
+            noValidate
+            sx={{ mt: 1 }}
+          >
             <TextField
               margin="normal"
               required
@@ -116,7 +133,7 @@ export default function Login() {
               </Grid>
               <Grid item>
                 <Link href="/signup" variant="body2" className="text-blue-800">
-                  Dont have an account? Sign Up
+                  Don't have an account? Sign Up
                 </Link>
               </Grid>
             </Grid>
@@ -124,6 +141,11 @@ export default function Login() {
         </Box>
         <Copyright sx={{ mt: 8, mb: 4 }} />
       </Container>
+      <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
+        <MuiAlert onClose={handleClose} severity="error" sx={{ width: "100%" }}>
+          {error}
+        </MuiAlert>
+      </Snackbar>
     </div>
   );
 }

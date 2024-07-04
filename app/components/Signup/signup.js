@@ -7,17 +7,17 @@ import TextField from "@mui/material/TextField";
 import Link from "@mui/material/Link";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
-import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import InputAdornment from "@mui/material/InputAdornment";
-import { useState } from "react";
 import IconButton from "@mui/material/IconButton";
+import { useState } from "react";
 import { useRouter } from "next/navigation";
 import axios from "axios";
-import Image from "next/image";
+import Snackbar from "@mui/material/Snackbar";
+import MuiAlert from "@mui/material/Alert";
 
 function Copyright(props) {
   return (
@@ -36,21 +36,61 @@ export default function SignUp() {
   const [user, setUser] = React.useState({
     firstName: "",
     lastName: "",
-    phone: 0,
+    phone: "",
     email: "",
     password: "",
     confirmPassword: "",
   });
+  const [error, setError] = useState("");
+  const [open, setOpen] = useState(false);
   const router = useRouter();
+
+  const handleClick = () => {
+    setOpen(true);
+  };
+
+  const handleClose = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+    setOpen(false);
+  };
+
   async function handleSubmit(event) {
     event.preventDefault();
+
+    // Basic validation
+    if (!user.email.includes("@")) {
+      setError("Invalid email address");
+      handleClick();
+      return;
+    }
+    if (user.password.length < 8) {
+      setError("Password must be at least 8 characters long");
+      handleClick();
+      return;
+    }
+    if (user.password !== user.confirmPassword) {
+      setError("Passwords do not match");
+      handleClick();
+      return;
+    }
+
     try {
       const resp = await axios.post("api/users/signup", user);
-      // console.log(resp);
       console.log("Signup Successful");
       router.push("/login");
     } catch (err) {
-      console.log(err.response.data.error);
+      const errorMsg =
+        err.response?.data?.error || "An error occurred during signup";
+      if (errorMsg.includes("email already exists")) {
+        setError("Email already exists");
+      } else if (errorMsg.includes("phone number already exists")) {
+        setError("Phone number already exists");
+      } else {
+        setError(errorMsg);
+      }
+      handleClick();
     }
   }
 
@@ -208,6 +248,11 @@ export default function SignUp() {
         </Box>
         <Copyright sx={{ mt: 5 }} />
       </Container>
+      <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
+        <MuiAlert onClose={handleClose} severity="error" sx={{ width: "100%" }}>
+          {error}
+        </MuiAlert>
+      </Snackbar>
     </div>
   );
 }
